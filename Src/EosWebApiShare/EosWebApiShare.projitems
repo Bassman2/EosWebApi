@@ -9,5 +9,46 @@
     <Import_RootNamespace>EosWebApi</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Canon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Directory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)File.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Usings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Volume.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JsonConverters\DateTimeJsonConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\CanonService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraAuthorModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraCopyrightModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraDateTimeModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraDevDescModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraNicknameModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraOwnerNameModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcapiModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcAutoPowerOffModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcBeepModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcDisplayOffModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceInformationModel.cs" />
+    <Compile Include="..\EosWebApiShare\Service\Model\DeviceStatusBatteriesModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusBatteryModel.cs" />
+    <Compile Include="..\EosWebApiShare\Service\Model\DeviceStatusCurrentDirectoryModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusCurrentStorageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusStorageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ErrorMessageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ImageInfoModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\LensModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Network.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NumberModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\PathListModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\SourceGenerationContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\StorageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\StorageNameModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\TempStatusModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\UrlListModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ValueAbilityModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ValueGetModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ValuePutModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Enums\" />
   </ItemGroup>
 </Project>

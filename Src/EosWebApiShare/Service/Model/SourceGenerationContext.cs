@@ -1,6 +1,6 @@
 ﻿namespace EosWebApi.Service.Model;
 
-[JsonSerializable(typeof(CameraAuthorModel))]
+[JsonSerializable(typeof(DeviceInformationModel))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }

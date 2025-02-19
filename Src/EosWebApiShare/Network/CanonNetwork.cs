@@ -153,7 +153,8 @@ internal class CanonNetwork
 
         string text = await upnp.GetStringAsync(upnpUri);
 
-        var cameraDevDesc = text.XDeserialize<DevDescModel>("root");   
+        XNamespace devns = "urn:schemas-upnp-org:device-1-0";           // XNamespace Get
+        var cameraDevDesc = text.XDeserialize<DevDescModel>(devns + "root");   
         return cameraDevDesc;
     }
 

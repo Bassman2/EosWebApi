@@ -24,15 +24,16 @@ public class ServiceModel : IXSerializable
 
     public void ReadX(XElement elm)
     {
+        XNamespace nsSchema = "urn:schemas-canon-com:schema-upnp";
         ServiceType = elm.ReadElementString("serviceType");
         ServiceId = elm.ReadElementString("serviceId");
         SCPDURL = elm.ReadElementString("SCPDURL");
         ControlURL = elm.ReadElementString("controlURL");
         EventSubURL = elm.ReadElementString("eventSubURL");
-        TargetId = elm.ReadElementString("X_targetId");
-        OnService = elm.ReadElementString("X_onService");
-        AccessURL = elm.ReadElementString("X_accessURL");
-        DeviceUsbId = elm.ReadElementString("X_deviceUsbId");
-        DeviceNickname = elm.ReadElementString("X_deviceNickname");
+        TargetId = elm.ReadElementString(nsSchema + "X_targetId");
+        OnService = elm.ReadElementString(nsSchema + "X_onService");
+        AccessURL = elm.ReadElementString(nsSchema + "X_accessURL");
+        DeviceUsbId = elm.ReadElementString(nsSchema + "X_deviceUsbId");
+        DeviceNickname = elm.ReadElementString(nsSchema + "X_deviceNickname");
     }
 }

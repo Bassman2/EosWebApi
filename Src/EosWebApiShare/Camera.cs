@@ -1,7 +1,7 @@
 ﻿
 namespace EosWebApi;
 
-public sealed class Camera 
+public sealed class Camera : IDisposable
 {
     private CanonService? service;
     private DevDescModel? devDesc;
@@ -10,12 +10,29 @@ public sealed class Camera
     public Camera()
     { }
 
+    public Camera(string host, string appName)
+    {
+        DevDescModel devDesc = CanonNetwork.GetDevDescAsync(host, default).Result ?? throw new Exception("No connected Canon device");
+
+        var uri = new Uri(devDesc.Device!.ServiceList![0].AccessURL!);
+
+        this.service = new CanonService(uri, null, appName);
+    }
+
     internal Camera(DevDescModel devDesc)
     {
         _ = Open(devDesc) ? 0 : throw new Exception($"Failed to open {devDesc?.Device?.ServiceList?[0].AccessURL}");
     }
 
-    public void Dispose() => Close();
+    public void Dispose()
+    {
+        if (service is not null)
+        {
+            service.Dispose();
+            service = null;
+        }
+    }
+    
     
     public bool IsOpen => this.service is not null;
 

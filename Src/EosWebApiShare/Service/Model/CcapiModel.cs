@@ -3,19 +3,19 @@
 internal class CcapisModel
 {
     [JsonPropertyName("ver100")]
-    public List<CcapiMOdel>? Ver100 { get; set; }
+    public List<CcapiModel>? Ver100 { get; set; }
 
     [JsonPropertyName("ver110")]
-    public List<CcapiMOdel>? Ver110 { get; set; }
+    public List<CcapiModel>? Ver110 { get; set; }
 
     [JsonPropertyName("ver120")]
-    public List<CcapiMOdel>? Ver120 { get; set; }
+    public List<CcapiModel>? Ver120 { get; set; }
 
     [JsonPropertyName("ver130")]
-    public List<CcapiMOdel>? Ver130 { get; set; }
+    public List<CcapiModel>? Ver130 { get; set; }
 }
 
-internal class CcapiMOdel
+internal class CcapiModel
 {
     // version 1.0.0
     [JsonPropertyName("url")]

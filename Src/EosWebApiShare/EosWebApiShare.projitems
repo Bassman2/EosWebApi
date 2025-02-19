@@ -11,8 +11,13 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Canon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DeviceInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Directory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)File.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\CanonNetwork.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DeviceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\Model\VersionModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Usings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Volume.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonConverters\DateTimeJsonConverter.cs" />
@@ -20,12 +25,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraAuthorModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraCopyrightModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraDateTimeModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraDevDescModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DevDescModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraNicknameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CameraOwnerNameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcapiModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcAutoPowerOffModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcBeepModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\AutoPowerOffModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BeepModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcDisplayOffModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceInformationModel.cs" />
     <Compile Include="..\EosWebApiShare\Service\Model\DeviceStatusBatteriesModel.cs" />

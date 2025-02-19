@@ -1,10 +1,10 @@
 ﻿namespace EosWebApi;
 
-public class Volume : EosVolume
+public class Volume 
 {
-    private readonly CcService service;
+    private readonly CanonService service;
 
-    internal CcVolume(CcService service, Storage storage)
+    internal Volume(CanonService service, StorageModel storage)
     {
         this.service = service;
         this.Name = storage.Name ?? "";
@@ -14,33 +14,33 @@ public class Volume : EosVolume
 
     }
       
-    public override string Name { get; }
+    public string Name { get; }
 
-    public override EdsStorageType StorageType { get; }
+    //public EdsStorageType StorageType { get; }
 
-    public override EdsAccess Access { get; }
+    //public EdsAccess Access { get; }
 
-    public override ulong MaxCapacity { get; }
+    public ulong MaxCapacity { get; }
 
-    public override ulong FreeSpaceInBytes { get; }
+    public ulong FreeSpaceInBytes { get; }
 
-    private List<CcDirectory>? directories;
+    private List<Directory>? directories;
 
-    public override IEnumerable<EosFileSystemItem>? FileSystemItems 
-        => Directories;
+    //public override IEnumerable<EosFileSystemItem>? FileSystemItems 
+    //    => Directories;
 
-    public override IEnumerable<CcDirectory>? Directories 
-        => directories ??= service.GetDirectoriesAsync(this.Name, default).Result?.Select(d => new CcDirectory(this.service, d)).ToList();
+    //public override IEnumerable<CcDirectory>? Directories 
+    //    => directories ??= service.GetDirectoriesAsync(this.Name, default).Result?.Select(d => new CcDirectory(this.service, d)).ToList();
 
-    public override IEnumerable<EosFileSystemItem>? Files 
-        => null; 
+    //public override IEnumerable<EosFileSystemItem>? Files 
+    //    => null; 
 
-    public override void Format()
+    public void Format()
     {
         throw new NotImplementedException();
     }
 
-    public override void Refresh()
+    public void Refresh()
     {
         directories = null; // reset
     }

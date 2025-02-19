@@ -4,13 +4,13 @@ namespace EosWebApi;
 public sealed class Camera 
 {
     private CanonService? service;
-    private CameraDevDescModel? cameraDevDesc;
+    private DevDescModel? devDesc;
     private DeviceInformationModel? deviceInformation;
 
     public Camera()
     { }
 
-    internal Camera(CameraDevDescModel devDesc)
+    internal Camera(DevDescModel devDesc)
     {
         _ = Open(devDesc) ? 0 : throw new Exception($"Failed to open {devDesc?.Device?.ServiceList?[0].AccessURL}");
     }
@@ -23,13 +23,13 @@ public sealed class Camera
     {
         //_ = CanonService.PingCamera(host) ? 0 : throw new Exception(host, "No connected device");
 
-        CameraDevDescModel cameraDevDesc = CanonService.GetCameraDevDescAsync(host, default).Result ?? throw new CanonException(host, "No connected Canon device");
+        DevDescModel cameraDevDesc = CanonNetwork.GetDevDescAsync(host, default).Result ?? throw new Exception("No connected Canon device");
         return Open(cameraDevDesc);
     }
 
-    public bool Open(CameraDevDescModel devDesc)
+    public bool Open(DevDescModel devDesc)
     {
-        this.cameraDevDesc = devDesc;
+        this.devDesc = devDesc;
 
         var uri = new Uri(devDesc.Device!.ServiceList![0].AccessURL!);
 
@@ -51,7 +51,17 @@ public sealed class Camera
             this.service = null;
         }
     }
+        
 
+    public async Task<DeviceInformation?> GetDeviceInformationAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetDeviceInformationAsync(cancellationToken);
+        return res.CastModel<DeviceInformation>();
+    }
+
+    /*
 
     #region information
 
@@ -133,4 +143,5 @@ public sealed class Camera
     public string[]? AutoPowerOffValues => autoPowerOffValues ??= service?.GetAutoPowerOffAsync(default).Result?.Ability?.ToArray();
 
     #endregion
+    */
 }

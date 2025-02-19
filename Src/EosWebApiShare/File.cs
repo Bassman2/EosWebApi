@@ -1,18 +1,17 @@
-﻿
-namespace EosWebApi;
+﻿namespace EosWebApi;
 
-public class File : EosFile
+public class File 
 {
-    private readonly CcService service;
+    private readonly CanonService service;
 
     private readonly string? volume;
     private readonly string? folder;
 
-    internal CcFile(CcService service, string path)
+    internal File(CanonService service, string path)
     {
         this.service = service;
         string[] arr = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
-        if (arr.Length != 6) throw new CcException("Wrong path length");
+        if (arr.Length != 6) throw new Exception("Wrong path length");
 
         this.volume = arr[3];
         this.folder = arr[4];
@@ -20,32 +19,32 @@ public class File : EosFile
         this.FullName = $"{arr[3]}/{arr[4]}/{arr[5]}";
     }
 
-    public override string Name { get; }
+    public string Name { get; }
 
-    public override string FullName { get; }
+    public string FullName { get; }
 
-    public override ulong Size { get; }
+    public ulong Size { get; }
 
-    public override DateTime CreationTime { get; }
+    public DateTime CreationTime { get; }
 
-    public override bool IsFolder => false;
+    public static bool IsFolder => false;
 
-    public override void Delete()
+    public void Delete()
     {
         throw new NotImplementedException();
     }
 
-    public override void Download(string filePath)
+    public void Download(string filePath)
     {
         throw new NotImplementedException();
     }
 
-    public override void DownloadThumbnail(string filePath)
+    public void DownloadThumbnail(string filePath)
     {
         throw new NotImplementedException();
     }
 
-    public override void Refresh()
+    public void Refresh()
     {
         throw new NotImplementedException();
     }

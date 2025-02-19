@@ -3,10 +3,14 @@ global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
 global using System.Diagnostics;
 global using System.Net.NetworkInformation;
+global using System.Net.Sockets;
+
 global using System.Text;
 
 global using WebServiceClient;
 global using WebServiceClient.XSerializer;
 
+global using EosWebApi.Network;
+global using EosWebApi.Network.Model;
 global using EosWebApi.Service;
 global using EosWebApi.Service.Model;

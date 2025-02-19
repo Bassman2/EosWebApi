@@ -2,8 +2,8 @@
 
 internal class DeviceStatusBatteriesModel
 {
-    [JsonPropertyName("batterylist")]
-    public List<DeviceStatusBattery>? Batteries { get; set; }
+    //[JsonPropertyName("batterylist")]
+    //public List<DeviceStatusBattery>? Batteries { get; set; }
 }
 
 

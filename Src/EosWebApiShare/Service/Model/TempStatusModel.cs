@@ -2,7 +2,7 @@
 
 internal class TempStatusModel
 {
-    [JsonPropertyName("status")]
-    public TemperatureStatus? Status { get; set; }
+    //[JsonPropertyName("status")]
+    //public TemperatureStatusModel? Status { get; set; }
 }
 

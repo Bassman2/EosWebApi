@@ -8,13 +8,13 @@ internal class CameraDateTimeModel
     [JsonPropertyName("dst")]
     public bool Dst { get; set; }
 
-    public static implicit operator DateTime?(CameraDateTime? d) 
+    public static implicit operator DateTime?(CameraDateTimeModel? d) 
     {
         return d?.DateTime;
     }
 
-    public static explicit operator CameraDateTime?(DateTime? d)
+    public static explicit operator CameraDateTimeModel?(DateTime? d)
     {
-        return d is null ? null : new CameraDateTime() { DateTime = d };
+        return d is null ? null : new CameraDateTimeModel() { DateTime = d };
     }
 }

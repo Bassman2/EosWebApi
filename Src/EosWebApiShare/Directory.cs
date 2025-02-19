@@ -6,7 +6,7 @@ public class Directory
 
     private readonly string? volume;
     private readonly string? folder;
-    internal CcDirectory(CcService service, string path)
+    internal Directory(CanonService service, string path)
     {
         this.service = service;
         string[] arr = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
@@ -39,34 +39,35 @@ public class Directory
 
     }
 
-    public override string Name { get; }
+    public string Name { get; }
 
-    public override string FullName { get; }
+    public string FullName { get; }
 
-    public override DateTime CreationTime { get; }
+    public DateTime CreationTime { get; }
 
-    public override bool IsFolder => true; 
+    public static bool IsFolder => true; 
 
-    private List<CcFile>? files;
-    public override IEnumerable<EosFileSystemItem>? FileSystemItems
-        => Files;
+    private List<File>? files;
 
-
-    public override IEnumerable<CcDirectory>? Directories
-        => null;
+    //public override IEnumerable<EosFileSystemItem>? FileSystemItems
+    //    => Files;
 
 
-    public override IEnumerable<CcFile>? Files
+    //public override IEnumerable<CcDirectory>? Directories
+    //    => null;
 
-        => null; // files ??= service.GetFilesAsync(volume!, folder!, default).ToList().Select(d => new CcFile(this.service, d)).ToList();
+
+    //public override IEnumerable<CcFile>? Files
+
+    //    => null; // files ??= service.GetFilesAsync(volume!, folder!, default).ToList().Select(d => new CcFile(this.service, d)).ToList();
 
 
-    public override void Delete()
+    public void Delete()
     {
         throw new NotImplementedException();
     }
 
-    public override void Refresh()
+    public void Refresh()
     {
         files = null; // reset
     }

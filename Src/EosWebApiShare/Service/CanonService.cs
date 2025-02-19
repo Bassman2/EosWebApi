@@ -5,33 +5,47 @@ namespace EosWebApi.Service;
 internal class CanonService(Uri host, IAuthenticator? authenticator, string appName)
     : JsonService(host, authenticator, appName, SourceGenerationContext.Default)
 {
-    public static bool PingCamera(Uri url) => PingCamera(url.Host);
-
-    public static bool PingCamera(string host)
-    {
-        PingReply rep = new Ping().SendPingAsync(host, 1000).Result;
-        return rep.Status == IPStatus.Success;
-    }
+    
 
     protected override string? AuthenticationTestUrl => null;
 
 
-    public static async Task<CameraDevDescModel?> GetCameraDevDescAsync(Uri url, CancellationToken cancellationToken) => await GetCameraDevDescAsync(url.Host, cancellationToken);
 
-    public static async Task<CameraDevDescModel?> GetCameraDevDescAsync(string host, CancellationToken cancellationToken)
+    public async Task<CcapisModel?> GetApiListAsync(CancellationToken cancellationToken)
     {
-        Uri upnpUri = new UriBuilder("http", host, 49152, "/upnp/CameraDevDesc.xml").Uri;
-        using HttpClient upnp = new HttpClient();
-
-        string text = await upnp.GetStringAsync(upnpUri);
-
-        //var serializer = new XmlSerializer(typeof(CameraDevDesc));
-        //CameraDevDesc? cameraDevDesc = (CameraDevDesc?)serializer.Deserialize(new StringReader(text));
-
-        var cameraDevDesc = text.XDeserialize<CameraDevDescModel>("root");   // Namespace="urn:schemas-upnp-org:device-1-0"
-        return cameraDevDesc;
-
+        var res = await GetFromJsonAsync<CcapisModel>("/ccapi", cancellationToken);
+        return res;
     }
+
+
+    public async Task<DeviceInformationModel?> GetDeviceInformationAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<DeviceInformationModel>("/ccapi/ver100/deviceinformation", cancellationToken);
+        return res;
+    }
+
+
+
+
+
+    /*
+
+    //public static async Task<CameraDevDescModel?> GetCameraDevDescAsync(Uri url, CancellationToken cancellationToken) => await GetCameraDevDescAsync(url.Host, cancellationToken);
+
+    //public static async Task<CameraDevDescModel?> GetCameraDevDescAsync(string host, CancellationToken cancellationToken)
+    //{
+    //    Uri upnpUri = new UriBuilder("http", host, 49152, "/upnp/CameraDevDesc.xml").Uri;
+    //    using HttpClient upnp = new HttpClient();
+
+    //    string text = await upnp.GetStringAsync(upnpUri);
+
+    //    //var serializer = new XmlSerializer(typeof(CameraDevDesc));
+    //    //CameraDevDesc? cameraDevDesc = (CameraDevDesc?)serializer.Deserialize(new StringReader(text));
+
+    //    var cameraDevDesc = text.XDeserialize<CameraDevDescModel>("root");   // Namespace="urn:schemas-upnp-org:device-1-0"
+    //    return cameraDevDesc;
+
+    //}
 
     #region Finder
 
@@ -49,9 +63,7 @@ internal class CanonService(Uri host, IAuthenticator? authenticator, string appN
 
     #region Camera Information (Fixed Values)
 
-    public async Task<DeviceInformationModel?> GetDeviceInformationAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<DeviceInformationModel>("/ccapi/ver100/deviceinformation", cancellationToken);
-
+    
     #endregion
 
     #region Camera Status (Variable Values)
@@ -191,4 +203,6 @@ internal class CanonService(Uri host, IAuthenticator? authenticator, string appN
     #region Shooting Control
 
     #endregion
+
+    */
 }

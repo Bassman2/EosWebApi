@@ -3,5 +3,5 @@
 internal class DeviceStatusStorageModel
 {
     [JsonPropertyName("storagelist")]
-    public List<Storage>? Storages { get; set; }
+    public List<StorageModel>? Storages { get; set; }
 }

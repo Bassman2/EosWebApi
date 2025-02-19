@@ -24,6 +24,12 @@ internal class CanonService(Uri host, IAuthenticator? authenticator, string appN
         return res;
     }
 
+    public async Task<DeviceStatusStorageModel?> GetStorageAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<DeviceStatusStorageModel>("/ccapi/ver110/devicestatus/storage", cancellationToken);
+        return res;
+    }
+
 
 
 

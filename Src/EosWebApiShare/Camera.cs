@@ -82,8 +82,24 @@ public sealed class Camera : IDisposable
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
-        var res = await service.GetStorageAsync(cancellationToken);
+        var res = await service.GetStoragesAsync(cancellationToken);
         return res.CastModel<Storage>();
+    }
+
+    public async Task<CurrentStorage?> GetCurrentStorageAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetCurrentStorageAsync(cancellationToken);
+        return res.CastModel<CurrentStorage>();
+    }
+
+    public async Task<CurrentDirectory?> GetCurrentDirectoryAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetCurrentDirectoryAsync(cancellationToken);
+        return res.CastModel<CurrentDirectory>();
     }
 
     /*

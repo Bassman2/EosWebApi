@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)EosBaseUnitTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EosDeviceInformationUnitTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EosDeviceStatusUnitTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Usings.cs" />
   </ItemGroup>
 </Project>

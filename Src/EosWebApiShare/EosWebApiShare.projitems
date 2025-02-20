@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Canon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CurrentDirectory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CurrentStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeviceInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeviceStatusStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Directory.cs" />
@@ -19,6 +21,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\VersionModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusBatteriesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusCurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusStorageModel.cs" />
@@ -39,7 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CcDisplayOffModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceInformationModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusBatteryModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusCurrentStorageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentStorageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ErrorMessageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ImageInfoModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\LensModel.cs" />

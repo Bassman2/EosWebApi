@@ -63,10 +63,22 @@ internal class CanonService : JsonService
         return res;
     }
 
-    public async Task<List<StorageModel>?> GetStorageAsync(CancellationToken cancellationToken)
+    public async Task<List<StorageModel>?> GetStoragesAsync(CancellationToken cancellationToken)
     {
         var res = await GetFromJsonAsync<DeviceStatusStorageModel>(CreateRequest("devicestatus/storage"), cancellationToken);
         return res?.Storages;
+    }
+
+    public async Task<CurrentStorageModel?> GetCurrentStorageAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<CurrentStorageModel>(CreateRequest("devicestatus/currentstorage"), cancellationToken);
+        return res;
+    }
+
+    public async Task<CurrentDirectoryModel?> GetCurrentDirectoryAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<CurrentDirectoryModel>(CreateRequest("devicestatus/currentdirectory"), cancellationToken);
+        return res;
     }
 
 
@@ -75,22 +87,6 @@ internal class CanonService : JsonService
 
     /*
 
-    //public static async Task<CameraDevDescModel?> GetCameraDevDescAsync(Uri url, CancellationToken cancellationToken) => await GetCameraDevDescAsync(url.Host, cancellationToken);
-
-    //public static async Task<CameraDevDescModel?> GetCameraDevDescAsync(string host, CancellationToken cancellationToken)
-    //{
-    //    Uri upnpUri = new UriBuilder("http", host, 49152, "/upnp/CameraDevDesc.xml").Uri;
-    //    using HttpClient upnp = new HttpClient();
-
-    //    string text = await upnp.GetStringAsync(upnpUri);
-
-    //    //var serializer = new XmlSerializer(typeof(CameraDevDesc));
-    //    //CameraDevDesc? cameraDevDesc = (CameraDevDesc?)serializer.Deserialize(new StringReader(text));
-
-    //    var cameraDevDesc = text.XDeserialize<CameraDevDescModel>("root");   // Namespace="urn:schemas-upnp-org:device-1-0"
-    //    return cameraDevDesc;
-
-    //}
 
     #region Finder
 

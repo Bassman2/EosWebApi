@@ -1,6 +1,6 @@
 ﻿namespace EosWebApi.Service.Model;
 
-internal class DeviceStatusCurrentStorage
+internal class CurrentDirectoryModel
 {
     [JsonPropertyName("name")]
     public string? Name { get; set; }

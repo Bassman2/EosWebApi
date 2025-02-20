@@ -127,4 +127,17 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         Assert.AreEqual(TemperatureStatus.Normal, temperature.Status, nameof(temperature.Status));
        
     }
+
+    [TestMethod]
+    [Ignore("PowerZoomStatus is not supported by EOS R5")]
+    public async Task TestMethodGetPowerZoomStatusAsync()
+    {
+        using var camera = new Camera(host, appName);
+
+        var powerZoomStatus = await camera.GetPowerZoomStatusAsync();
+
+        Assert.IsNotNull(powerZoomStatus);
+        //Assert.AreEqual(TemperatureStatus.Normal, temperature.Status, nameof(temperature.Status));
+
+    }
 }

@@ -4,15 +4,15 @@
 public enum TemperatureStatus
 {
     Normal,
-    warning,
-    frameratedown,
-    disableliveview,
-    disablerelease,
-    stillqualitywarning,
-    restrictionmovierecording,
-    warning_and_restrictionmovierecording,
-    frameratedown_and_restrictionmovierecording,
-    disableliveview_and_restrictionmovierecording,
-    disablerelease_and_restrictionmovierecording,
-    stillqualitywarning_and_restrictionmovierecording
+    Warning,
+    Frameratedown,
+    DisableLiveview,
+    DisableRelease,
+    StillQualityWarning,
+    RestrictionMovierecording,
+    Warning_And_RestrictionMovierecording,
+    FramerateDown_And_RestrictionMovierecording,
+    DisableLiveview_And_RestrictionMovierecording,
+    DisableRelease_And_RestrictionMovierecording,
+    StillQualityWarning_And_RestrictionMovierecording
 }

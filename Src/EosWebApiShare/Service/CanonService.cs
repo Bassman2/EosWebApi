@@ -107,40 +107,19 @@ internal class CanonService : JsonService
         return res;
     }
 
+    public async Task<PowerZoomStatusModel?> GetPowerZoomStatusAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<PowerZoomStatusModel>(CreateRequest("devicestatus/powerzoomstatus"), cancellationToken);
+        return res;
+    }
+
 
 
     /*
 
 
-    #region Finder
-
-    #endregion
-
-    #region List of APIs
-
-    public async Task<CcapisModel?> GetApiListAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<CcapisModel>("/ccapi", cancellationToken);
-
-    public async Task<CcapisModel?> GetApiListAsync(string version, CancellationToken cancellationToken)
-       => await GetFromJsonAsync<CcapisModel>($"/ccapi/{version}/topurlfordev", cancellationToken);
-
-    #endregion
-
-    #region Camera Information (Fixed Values)
-
     
-    #endregion
-
-    #region Camera Status (Variable Values)
-       
-
-    public async Task<LensModel?> GetDeviceStatusLensAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<LensModel>("/ccapi/ver100/devicestatus/lens", cancellationToken);
-
-    public async Task<TempStatusModel?> GetDeviceStatusTemperatureAsync(CancellationToken cancellationToken)
-        => (await GetFromJsonAsync<TempStatusModel>("/ccapi/ver100/devicestatus/temperature", cancellationToken))?.Status;
-
-    #endregion
+    
 
     #region Camera Settings
 

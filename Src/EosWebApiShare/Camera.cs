@@ -134,6 +134,14 @@ public sealed class Camera : IDisposable
         return res.CastModel<Temperature>();
     }
 
+    public async Task<PowerZoomStatus?> GetPowerZoomStatusAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetPowerZoomStatusAsync(cancellationToken);
+        return res.CastModel<PowerZoomStatus>();
+    }
+
     /*
 
     #region information

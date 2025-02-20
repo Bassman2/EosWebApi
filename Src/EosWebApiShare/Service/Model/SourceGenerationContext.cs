@@ -8,6 +8,10 @@
 [JsonSerializable(typeof(BatteryListModel))]
 [JsonSerializable(typeof(LensModel))]
 [JsonSerializable(typeof(TemperatureModel))]
+[JsonSerializable(typeof(CopyrightModel))]
+[JsonSerializable(typeof(AuthorModel))]
+[JsonSerializable(typeof(OwnerNameModel))]
+[JsonSerializable(typeof(NicknameModel))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }

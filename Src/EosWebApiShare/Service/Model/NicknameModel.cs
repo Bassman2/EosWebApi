@@ -1,6 +1,6 @@
 ﻿namespace EosWebApi.Service.Model;
 
-internal class CameraNicknameModel
+internal class NicknameModel
 {
     [JsonPropertyName("nickname")]
     public string? Nickname { get; set; }

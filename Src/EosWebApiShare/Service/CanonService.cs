@@ -113,6 +113,70 @@ internal class CanonService : JsonService
         return res;
     }
 
+    public async Task<string?> GetCopyrightAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<CopyrightModel>(CreateRequest("functions/registeredname/copyright"), cancellationToken);
+        return res?.Copyright;
+    }
+
+    public async Task SetCopyrightAsync(string? copyright, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/copyright"), new CopyrightModel() { Copyright = copyright }, cancellationToken);
+    }
+
+    public async Task DeleteCopyrightAsync( CancellationToken cancellationToken)
+    {
+        await DeleteAsync(CreateRequest("functions/registeredname/copyright"), cancellationToken);
+    }
+
+    public async Task<string?> GetAuthorAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<AuthorModel>(CreateRequest("functions/registeredname/author"), cancellationToken);
+        return res?.Author;
+    }
+
+    public async Task SetAuthorAsync(string? author, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/author"), new AuthorModel() { Author = author }, cancellationToken);
+    }
+
+    public async Task DeleteAuthorAsync(CancellationToken cancellationToken)
+    {
+        await DeleteAsync(CreateRequest("functions/registeredname/author"), cancellationToken);
+    }
+
+    public async Task<string?> GetOwnerNameAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<OwnerNameModel>(CreateRequest("functions/registeredname/ownername"), cancellationToken);
+        return res?.OwnerName;
+    }
+
+    public async Task SetOwnerNameAsync(string? ownerName, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/ownername"), new OwnerNameModel() { OwnerName = ownerName }, cancellationToken);
+    }
+
+    public async Task DeleteOwnerNameAsync(CancellationToken cancellationToken)
+    {
+        await DeleteAsync(CreateRequest("functions/registeredname/ownername"), cancellationToken);
+    }
+
+    public async Task<string?> GetNicknameAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<NicknameModel>(CreateRequest("functions/registeredname/nickname"), cancellationToken);
+        return res?.Nickname;
+    }
+
+    public async Task SetNicknameAsync(string nickname, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/nickname"), new NicknameModel() { Nickname = nickname }, cancellationToken);
+    }
+
+    public async Task DeleteNicknameAsync(CancellationToken cancellationToken)
+    {
+        await DeleteAsync(CreateRequest("functions/registeredname/nickname"), cancellationToken);
+    }
+
 
 
     /*
@@ -123,24 +187,7 @@ internal class CanonService : JsonService
 
     #region Camera Settings
 
-    public async Task<string?> GetCopyrightAsync(CancellationToken cancellationToken)
-        => (await GetFromJsonAsync<CameraCopyrightModel>("/ccapi/ver100/functions/registeredname/copyright", cancellationToken))?.Copyright;
-
-    public async Task SetCopyrightAsync(string? value, CancellationToken cancellationToken)
-        => await PutAsJsonAsync("/ccapi/ver100/functions/registeredname/copyright", new CameraCopyrightModel() { Copyright = value }, cancellationToken);
-
-    public async Task<string?> GetAuthorAsync(CancellationToken cancellationToken)
-        => (await GetFromJsonAsync<CameraAuthorModel>("/ccapi/ver100/functions/registeredname/author", cancellationToken))?.Author;
-
-    public async Task SetAuthorAsync(string? value, CancellationToken cancellationToken)
-        => await PutAsJsonAsync("/ccapi/ver100/functions/registeredname/author", new CameraAuthorModel() { Author = value }, cancellationToken);
-
-    public async Task<string?> GetOwnerAsync(CancellationToken cancellationToken)
-       => (await GetFromJsonAsync<CameraOwnerNameModel>("/ccapi/ver100/functions/registeredname/ownername", cancellationToken))?.OwnerName;
-
-    public async Task SetOwnerAsync(string? value, CancellationToken cancellationToken)
-        => await PutAsJsonAsync("/ccapi/ver100/functions/registeredname/ownername", new CameraOwnerNameModel() { OwnerName = value }, cancellationToken);
-
+   
 
     public async Task<string?> GetNicknameAsync(CancellationToken cancellationToken)
        => (await GetFromJsonAsync<CameraNicknameModel>("/ccapi/ver100/functions/registeredname/nickname", cancellationToken))?.Nickname;

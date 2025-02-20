@@ -42,12 +42,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Volume.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonConverters\DateTimeJsonConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\CanonService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CameraAuthorModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CameraCopyrightModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\AuthorModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CopyrightModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CameraDateTimeModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DevDescModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CameraNicknameModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CameraOwnerNameModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NicknameModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\OwnerNameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CcapiModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\AutoPowerOffModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\BeepModel.cs" />

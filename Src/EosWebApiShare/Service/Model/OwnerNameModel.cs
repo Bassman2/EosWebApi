@@ -1,6 +1,6 @@
 ﻿namespace EosWebApi.Service.Model;
 
-internal class CameraOwnerNameModel
+internal class OwnerNameModel
 {
     [JsonPropertyName("ownername")]
     public string? OwnerName { get; set; }

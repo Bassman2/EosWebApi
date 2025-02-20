@@ -142,6 +142,94 @@ public sealed class Camera : IDisposable
         return res.CastModel<PowerZoomStatus>();
     }
 
+    public async Task<string?> GetCopyrightAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetCopyrightAsync(cancellationToken);
+        return res;
+    }
+
+    public async Task SetCopyrightAsync(string copyright, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetCopyrightAsync(copyright, cancellationToken);
+    }
+
+    public async Task DeleteCopyrightAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.DeleteCopyrightAsync(cancellationToken);
+    }
+
+    public async Task<string?> GetAuthorAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetAuthorAsync(cancellationToken);
+        return res;
+    }
+
+    public async Task SetAuthorAsync(string? author, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetAuthorAsync(author, cancellationToken);
+    }
+
+    public async Task DeleteAuthorAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.DeleteAuthorAsync(cancellationToken);
+    }
+
+    public async Task<string?> GetOwnerNameAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetOwnerNameAsync(cancellationToken);
+        return res;
+    }
+
+    public async Task SetOwnerNameAsync(string? ownerName, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetOwnerNameAsync(ownerName, cancellationToken);
+    }
+
+    public async Task DeleteOwnerNameAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.DeleteOwnerNameAsync(cancellationToken);
+    }
+
+    public async Task<string?> GetNicknameAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetNicknameAsync(cancellationToken);
+        return res;
+    }
+
+    public async Task SetNicknameAsync(string nickname, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetNicknameAsync(nickname, cancellationToken);
+    }
+
+    public async Task DeleteNicknameAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.DeleteNicknameAsync(cancellationToken);
+    }
+
     /*
 
     #region information

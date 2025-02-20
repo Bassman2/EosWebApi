@@ -26,10 +26,10 @@ public class EosFunctionsRegisteredNameUnitTest : EosBaseUnitTest
 
         var cmpCopyright = await camera.GetCopyrightAsync();
 
-        Assert.AreEqual("", orgCopyright, nameof(orgCopyright));
+        Assert.AreEqual("R. & S. Beckers", orgCopyright, nameof(orgCopyright));
         Assert.AreEqual("", emtCopyright, nameof(emtCopyright));
-        Assert.AreEqual("", dumCopyright, nameof(dumCopyright));
-        Assert.AreEqual("", cmpCopyright, nameof(cmpCopyright));
+        Assert.AreEqual("Dummy", dumCopyright, nameof(dumCopyright));
+        Assert.AreEqual("R. & S. Beckers", cmpCopyright, nameof(cmpCopyright));
     }
 
     [TestMethod]
@@ -54,10 +54,10 @@ public class EosFunctionsRegisteredNameUnitTest : EosBaseUnitTest
 
         var cmpAuthor = await camera.GetAuthorAsync();
 
-        Assert.AreEqual("", orgAuthor, nameof(orgAuthor));
+        Assert.AreEqual("R. & S. Beckers", orgAuthor, nameof(orgAuthor));
         Assert.AreEqual("", emtAuthor, nameof(emtAuthor));
-        Assert.AreEqual("", dumAuthor, nameof(dumAuthor));
-        Assert.AreEqual("", cmpAuthor, nameof(cmpAuthor));
+        Assert.AreEqual("Dummy", dumAuthor, nameof(dumAuthor));
+        Assert.AreEqual("R. & S. Beckers", cmpAuthor, nameof(cmpAuthor));
     }
 
     [TestMethod]
@@ -82,10 +82,10 @@ public class EosFunctionsRegisteredNameUnitTest : EosBaseUnitTest
 
         var cmpOwnerName = await camera.GetOwnerNameAsync();
 
-        Assert.AreEqual("", orgOwnerName, nameof(orgOwnerName));
+        Assert.AreEqual("R. & S. Beckers", orgOwnerName, nameof(orgOwnerName));
         Assert.AreEqual("", emtOwnerName, nameof(emtOwnerName));
-        Assert.AreEqual("", dumOwnerName, nameof(dumOwnerName));
-        Assert.AreEqual("", cmpOwnerName, nameof(cmpOwnerName));
+        Assert.AreEqual("Dummy", dumOwnerName, nameof(dumOwnerName));
+        Assert.AreEqual("R. & S. Beckers", cmpOwnerName, nameof(cmpOwnerName));
     }
 
     [TestMethod]
@@ -110,10 +110,10 @@ public class EosFunctionsRegisteredNameUnitTest : EosBaseUnitTest
 
         var cmpNickname = await camera.GetNicknameAsync();
 
-        Assert.AreEqual("", orgNickname, nameof(orgNickname));
-        Assert.AreEqual("", emtNickname, nameof(emtNickname));
-        Assert.AreEqual("", dumNickname, nameof(dumNickname));
-        Assert.AreEqual("", cmpNickname, nameof(cmpNickname));
+        Assert.AreEqual("EOS R6 Mark II", orgNickname, nameof(orgNickname));
+        Assert.AreEqual("EOSR6m2_95B4E2", emtNickname, nameof(emtNickname));
+        Assert.AreEqual("Dummy", dumNickname, nameof(dumNickname));
+        Assert.AreEqual("EOS R6 Mark II", cmpNickname, nameof(cmpNickname));
     }
 
 }

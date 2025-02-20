@@ -9,6 +9,7 @@
     <Import_RootNamespace>EosWebApi</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Battery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Canon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CurrentDirectory.cs" />
@@ -16,13 +17,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)DeviceInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeviceStatusStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Directory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryKind.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryLevel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryPosition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryQuality.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)File.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\CanonNetwork.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\VersionModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentDirectoryModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusBatteriesModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BatteryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusCurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusStorageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Storage.cs" />
@@ -41,7 +46,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\BeepModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CcDisplayOffModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceInformationModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusBatteryModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BatteryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentStorageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ErrorMessageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ImageInfoModel.cs" />
@@ -56,8 +61,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ValueAbilityModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ValueGetModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ValuePutModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Enums\" />
   </ItemGroup>
 </Project>

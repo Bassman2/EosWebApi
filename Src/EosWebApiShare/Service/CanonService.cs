@@ -81,6 +81,18 @@ internal class CanonService : JsonService
         return res;
     }
 
+    public async Task<BatteryModel?> GetBatteryAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<BatteryModel>(CreateRequest("devicestatus/battery"), cancellationToken);
+        return res;
+    }
+
+    public async Task<List<BatteryModel>?> GetBatteriesAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<BatteryListModel>(CreateRequest("devicestatus/batterylist"), cancellationToken);
+        return res?.Batteries;
+    }
+
 
 
 

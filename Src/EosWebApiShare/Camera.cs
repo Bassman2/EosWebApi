@@ -102,6 +102,22 @@ public sealed class Camera : IDisposable
         return res.CastModel<CurrentDirectory>();
     }
 
+    public async Task<Battery?> GetBatteryAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetBatteryAsync(cancellationToken);
+        return res.CastModel<Battery>();
+    }
+
+    public async Task<List<Battery>?> GetBatteriesAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetBatteriesAsync(cancellationToken);
+        return res.CastModel<Battery>();
+    }
+
     /*
 
     #region information

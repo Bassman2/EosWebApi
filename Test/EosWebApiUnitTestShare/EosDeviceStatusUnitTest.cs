@@ -57,4 +57,50 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         Assert.AreEqual("102SUSIB", storage.Name, nameof(storage.Name));
         Assert.AreEqual("/ccapi/ver120/contents/card1/102SUSIB", storage.Path, nameof(storage.Path));
     }
+
+    [TestMethod]
+    public async Task TestMethodGetBatteryAsync()
+    {
+        using var camera = new Camera(host, appName);
+
+        var battery = await camera.GetBatteryAsync();
+
+        Assert.IsNotNull(battery);
+        Assert.AreEqual(null, battery.Position, nameof(battery.Position));
+        Assert.AreEqual(BatteryKind.Batterygrip, battery.Kind, nameof(battery.Kind));
+        Assert.AreEqual("", battery.Name, nameof(battery.Name));
+        Assert.AreEqual(null, battery.Quality, nameof(battery.Quality));
+        Assert.AreEqual(null, battery.LevelState, nameof(battery.LevelState));
+        Assert.IsNull(battery.LevelValue, nameof(battery.LevelValue));
+    }
+
+    [TestMethod]
+    public async Task TestMethodGetBatteriesAsync()
+    {
+        using var camera = new Camera(host, appName);
+
+        var batteries = await camera.GetBatteriesAsync();
+
+        Assert.IsNotNull(batteries);
+        Assert.AreEqual(2, batteries.Count);
+
+        var battery0 = batteries[0];
+        Assert.IsNotNull(battery0);
+        Assert.AreEqual(BatteryPosition.Grip02, battery0.Position, nameof(battery0.Position));
+        Assert.AreEqual(BatteryKind.Battery, battery0.Kind, nameof(battery0.Kind));
+        Assert.AreEqual("LP-E6NH", battery0.Name, nameof(battery0.Name));
+        Assert.AreEqual(BatteryQuality.Good, battery0.Quality, nameof(battery0.Quality));
+        Assert.AreNotEqual(null, battery0.LevelState, nameof(battery0.LevelState));
+        Assert.AreNotEqual(0, battery0.LevelValue, nameof(battery0.LevelValue));
+
+
+        var battery1 = batteries[1];
+        Assert.IsNotNull(battery1);
+        Assert.AreEqual(BatteryPosition.Grip01, battery1.Position, nameof(battery1.Position));
+        Assert.AreEqual(BatteryKind.Battery, battery1.Kind, nameof(battery1.Kind));
+        Assert.AreEqual("LP-E6NH", battery1.Name, nameof(battery1.Name));
+        Assert.AreEqual(BatteryQuality.Good, battery1.Quality, nameof(battery1.Quality));
+        Assert.AreNotEqual(null, battery1.LevelState, nameof(battery1.LevelState));
+        Assert.AreNotEqual(0, battery1.LevelValue, nameof(battery1.LevelValue));
+    }
 }

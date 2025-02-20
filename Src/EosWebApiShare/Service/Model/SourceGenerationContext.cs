@@ -5,6 +5,7 @@
 [JsonSerializable(typeof(DeviceStatusStorageModel))]
 [JsonSerializable(typeof(CurrentStorageModel))]
 [JsonSerializable(typeof(CurrentDirectoryModel))]
+[JsonSerializable(typeof(BatteryListModel))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }

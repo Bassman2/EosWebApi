@@ -16,8 +16,8 @@ internal class StorageModel
     [JsonPropertyName("accesscapability")]
     public string? AccessCapability { get; set; }
 
-    [JsonPropertyName("maxize")]
-    public ulong Maxize { get; set; }
+    [JsonPropertyName("maxsize")]
+    public ulong MaxSize { get; set; }
 
     [JsonPropertyName("spacesize")]
     public ulong SpaceSize { get; set; }

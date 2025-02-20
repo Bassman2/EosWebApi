@@ -78,7 +78,7 @@ public sealed class Camera : IDisposable
         return res.CastModel<DeviceInformation>();
     }
 
-    public async Task<Storage?> GetStorageAsync(CancellationToken cancellationToken = default)
+    public async Task<List<Storage>?> GetStoragesAsync(CancellationToken cancellationToken = default)
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 

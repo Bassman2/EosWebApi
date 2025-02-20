@@ -8,7 +8,7 @@ public class Volume
     {
         this.service = service;
         this.Name = storage.Name ?? "";
-        this.MaxCapacity = storage.Maxize;
+        this.MaxCapacity = storage.MaxSize;
         this.FreeSpaceInBytes = storage.SpaceSize;
         //var colList = this.service.GetDirectories(this.Name);
 

@@ -1,17 +1,56 @@
-﻿using EosWebApi.Service.Model;
+﻿namespace EosWebApi.Service;
 
-namespace EosWebApi.Service;
-
-internal class CanonService(Uri host, IAuthenticator? authenticator, string appName)
-    : JsonService(host, authenticator, appName, SourceGenerationContext.Default)
+internal class CanonService : JsonService
 {
-    
-
     protected override string? AuthenticationTestUrl => null;
 
+    public CanonService(Uri host, IAuthenticator? authenticator, string appName)
+        : base(host, authenticator, appName, SourceGenerationContext.Default)
+    {
+        CcapisModel ccapi = GetApiListAsync(CancellationToken.None).Result ?? throw new Exception("No connected Canon device");
+        if (ccapi.Ver130 is not null)
+        {
+            foreach (var ver in ccapi.Ver130)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+        if (ccapi.Ver120 is not null)
+        {
+            foreach (var ver in ccapi.Ver120)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+        if (ccapi.Ver110 is not null)
+        {
+            foreach (var ver in ccapi.Ver110)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+        if (ccapi.Ver100 is not null)
+        {
+            foreach (var ver in ccapi.Ver100)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+    }
 
+    private Dictionary<string, string> verDict = [];
 
-    public async Task<CcapisModel?> GetApiListAsync(CancellationToken cancellationToken)
+    private string CreateRequest(string path)
+    {
+        string version = verDict[path];
+        return $"/ccapi/{version}/{path}";
+    }       
+
+    private async Task<CcapisModel?> GetApiListAsync(CancellationToken cancellationToken)
     {
         var res = await GetFromJsonAsync<CcapisModel>("/ccapi", cancellationToken);
         return res;
@@ -20,14 +59,14 @@ internal class CanonService(Uri host, IAuthenticator? authenticator, string appN
 
     public async Task<DeviceInformationModel?> GetDeviceInformationAsync(CancellationToken cancellationToken)
     {
-        var res = await GetFromJsonAsync<DeviceInformationModel>("/ccapi/ver100/deviceinformation", cancellationToken);
+        var res = await GetFromJsonAsync<DeviceInformationModel>(CreateRequest("deviceinformation"), cancellationToken);
         return res;
     }
 
-    public async Task<DeviceStatusStorageModel?> GetStorageAsync(CancellationToken cancellationToken)
+    public async Task<List<StorageModel>?> GetStorageAsync(CancellationToken cancellationToken)
     {
-        var res = await GetFromJsonAsync<DeviceStatusStorageModel>("/ccapi/ver110/devicestatus/storage", cancellationToken);
-        return res;
+        var res = await GetFromJsonAsync<DeviceStatusStorageModel>(CreateRequest("devicestatus/storage"), cancellationToken);
+        return res?.Storages;
     }
 
 

@@ -8,7 +8,7 @@ public class Storage
         Url = model.Url;
         Path = model.Path;
         AccessCapability = model.AccessCapability;
-        Maxize = model.Maxize;
+        MaxSize = model.MaxSize;
         SpaceSize = model.SpaceSize;
         ContentsNumber = model.ContentsNumber;
     }
@@ -21,7 +21,7 @@ public class Storage
 
     public string? AccessCapability { get; }
 
-    public ulong Maxize { get; }
+    public ulong MaxSize { get; }
 
     public ulong SpaceSize { get; }
 

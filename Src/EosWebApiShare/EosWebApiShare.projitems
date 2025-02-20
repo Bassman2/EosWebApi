@@ -19,7 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\VersionModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\Class1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusBatteriesModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusCurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusStorageModel.cs" />
@@ -44,7 +43,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ErrorMessageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ImageInfoModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\LensModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Network.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\NumberModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\PathListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\SourceGenerationContext.cs" />

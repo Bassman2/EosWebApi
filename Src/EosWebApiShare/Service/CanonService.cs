@@ -1,4 +1,6 @@
-﻿namespace EosWebApi.Service;
+﻿using EosWebApi.Service.Model;
+
+namespace EosWebApi.Service;
 
 internal class CanonService : JsonService
 {
@@ -93,7 +95,17 @@ internal class CanonService : JsonService
         return res?.Batteries;
     }
 
+    public async Task<LensModel?> GetLensAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<LensModel>(CreateRequest("devicestatus/lens"), cancellationToken);
+        return res;
+    }
 
+    public async Task<TemperatureModel?> GetTemperatureAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<TemperatureModel>(CreateRequest("devicestatus/temperature"), cancellationToken);
+        return res;
+    }
 
 
 
@@ -120,21 +132,7 @@ internal class CanonService : JsonService
     #endregion
 
     #region Camera Status (Variable Values)
-
-    public async Task<IEnumerable<StorageModel>?> GetDeviceStatusStorageAsync(CancellationToken cancellationToken)
-        => (await GetFromJsonAsync<DeviceStatusStorageModel>("/ccapi/ver110/devicestatus/storage", cancellationToken))?.Storages;
-
-    public async Task<DeviceStatusCurrentStorage?> GetDeviceStatusCurrentStorageAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<DeviceStatusCurrentStorage>("/ccapi/ver110/devicestatus/currentstorage", cancellationToken);
-
-    public async Task<DeviceStatusCurrentDirectoryModel?> GetDeviceStatusCurrentDirectoryAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<DeviceStatusCurrentDirectoryModel>("/ccapi/ver110/devicestatus/currentdirectory", cancellationToken);
-
-    public async Task<DeviceStatusBatteryModel?> GetDeviceStatusBatteryAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<DeviceStatusBatteryModel>("/ccapi/ver110/devicestatus/battery", cancellationToken);
-
-    public async Task<DeviceStatusBatteriesModel?> GetDeviceStatusBatteriesAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<DeviceStatusBatteriesModel>("/ccapi/ver110/devicestatus/batterylist", cancellationToken);
+       
 
     public async Task<LensModel?> GetDeviceStatusLensAsync(CancellationToken cancellationToken)
         => await GetFromJsonAsync<LensModel>("/ccapi/ver100/devicestatus/lens", cancellationToken);

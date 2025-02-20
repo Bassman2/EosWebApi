@@ -21,7 +21,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryQuality.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\TemperatureStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)File.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Lens.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\CanonNetwork.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DeviceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
@@ -30,7 +32,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BatteryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusCurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusStorageModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\TemperatureModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Storage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Temperature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Usings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Volume.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonConverters\DateTimeJsonConverter.cs" />
@@ -50,7 +54,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentStorageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ErrorMessageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ImageInfoModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\LensModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\LensModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\NumberModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\PathListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\SourceGenerationContext.cs" />

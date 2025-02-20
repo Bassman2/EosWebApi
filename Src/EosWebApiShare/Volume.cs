@@ -24,7 +24,7 @@ public class Volume
 
     public ulong FreeSpaceInBytes { get; }
 
-    private List<Directory>? directories;
+    //private List<Directory>? directories;
 
     //public override IEnumerable<EosFileSystemItem>? FileSystemItems 
     //    => Directories;
@@ -42,6 +42,6 @@ public class Volume
 
     public void Refresh()
     {
-        directories = null; // reset
+        //directories = null; // reset
     }
 }

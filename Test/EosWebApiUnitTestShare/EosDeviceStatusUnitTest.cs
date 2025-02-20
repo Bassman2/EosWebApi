@@ -90,7 +90,7 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         Assert.AreEqual(BatteryKind.Battery, battery0.Kind, nameof(battery0.Kind));
         Assert.AreEqual("LP-E6NH", battery0.Name, nameof(battery0.Name));
         Assert.AreEqual(BatteryQuality.Good, battery0.Quality, nameof(battery0.Quality));
-        Assert.AreNotEqual(null, battery0.LevelState, nameof(battery0.LevelState));
+        Assert.IsNull(battery0.LevelState, nameof(battery0.LevelState));
         Assert.AreNotEqual(0, battery0.LevelValue, nameof(battery0.LevelValue));
 
 
@@ -100,7 +100,31 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         Assert.AreEqual(BatteryKind.Battery, battery1.Kind, nameof(battery1.Kind));
         Assert.AreEqual("LP-E6NH", battery1.Name, nameof(battery1.Name));
         Assert.AreEqual(BatteryQuality.Good, battery1.Quality, nameof(battery1.Quality));
-        Assert.AreNotEqual(null, battery1.LevelState, nameof(battery1.LevelState));
+        Assert.IsNull(battery1.LevelState, nameof(battery1.LevelState));
         Assert.AreNotEqual(0, battery1.LevelValue, nameof(battery1.LevelValue));
+    }
+
+    [TestMethod]
+    public async Task TestMethodGetLensAsync()
+    {
+        using var camera = new Camera(host, appName);
+
+        var lens = await camera.GetLensAsync();
+
+        Assert.IsNotNull(lens);
+        Assert.AreEqual(true, lens.Mount, nameof(lens.Mount));
+        Assert.AreEqual("\u0002", lens.Name, nameof(lens.Name));
+    }
+
+    [TestMethod]
+    public async Task TestMethodGetTemperaturAsync()
+    {
+        using var camera = new Camera(host, appName);
+
+        var temperature = await camera.GetTemperatureAsync();
+
+        Assert.IsNotNull(temperature);
+        Assert.AreEqual(TemperatureStatus.Normal, temperature.Status, nameof(temperature.Status));
+       
     }
 }

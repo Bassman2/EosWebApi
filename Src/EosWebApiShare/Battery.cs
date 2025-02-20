@@ -11,7 +11,7 @@ public class Battery
         Quality = Enum.TryParse<BatteryQuality>(model.Quality, true, out var batteryQuality) ? batteryQuality : null;
         //Quality = Enum.TryParse(BatteryQuality.model.Quality;
         LevelValue = int.TryParse(model.Level, out var levelValue) ? levelValue : null;
-        LevelState = Enum.TryParse<BatteryLevel>(model.Level, true, out var batteryLevel) ? batteryLevel : null;
+        LevelState = int.TryParse(model.Level, out var _) ? null : (Enum.TryParse<BatteryLevel>(model.Level, true, out var batteryLevel) ? batteryLevel : null);
     }
     public BatteryPosition? Position { get; }
     public BatteryKind? Kind { get; }

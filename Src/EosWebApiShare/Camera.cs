@@ -267,6 +267,36 @@ public sealed class Camera : IDisposable
         await service.SetBeepAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
     }
 
+    public async Task<ValueAbility?> GetDisplayOffAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetDisplayOffAsync(cancellationToken);
+        return res.CastModel<ValueAbility>();
+    }
+
+    public async Task SetDisplayOffAsync(string value, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetDisplayOffAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
+    }
+
+    public async Task<ValueAbility?> GetAutoPowerOffAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetAutoPowerOffAsync(cancellationToken);
+        return res.CastModel<ValueAbility>();
+    }
+
+    public async Task SetAutoPowerOffAsync(string value, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetAutoPowerOffAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
+    }
+
     /*
 
     #region information

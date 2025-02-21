@@ -208,39 +208,31 @@ internal class CanonService : JsonService
         await PutAsJsonAsync(CreateRequest("functions/beep"), value, cancellationToken);
     }
 
+    public async Task<ValueAbilityModel?> GetDisplayOffAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<ValueAbilityModel>(CreateRequest("functions/displayoff"), cancellationToken);
+        return res;
+    }
+
+    public async Task SetDisplayOffAsync(ValueAbilityModel value, CancellationToken cancellationToken)
+    { 
+        await PutAsJsonAsync(CreateRequest("functions/displayoff"), value, cancellationToken);
+    }
+
+    public async Task<ValueAbilityModel?> GetAutoPowerOffAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<ValueAbilityModel>(CreateRequest("functions/autopoweroff"), cancellationToken);
+        return res;
+    }
+
+    public async Task SetAutoPowerOffAsync(ValueAbilityModel value, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CreateRequest("functions/autopoweroff"), value, cancellationToken);
+    }
+
 
     /*
-    
-    #region Camera Settings
-       
-
-    public async Task<ValueAbilityModel?> GetBeepAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<ValueAbilityModel>("/ccapi/ver100/functions/beep", cancellationToken);
-
-    public async Task SetBeepAsync(string value, CancellationToken cancellationToken) 
-        => await PutAsJsonAsync("/ccapi/ver100/functions/beep", new ValueAbilityModel() { Value = value }, cancellationToken);
-
-    public async Task<ValueAbilityModel?> GetDisplayOffAsync(CancellationToken cancellationToken)
-        => await GetFromJsonAsync<ValueAbilityModel>("/ccapi/ver100/functions/displayoff", cancellationToken);
-
-    public async Task SetDisplayOffAsync(string value, CancellationToken cancellationToken)
-        => await PutAsJsonAsync("/ccapi/ver100/functions/displayoff", new ValueAbilityModel() { Value = value }, cancellationToken);
-
-    public async Task<ValueAbilityModel?> GetAutoPowerOffAsync(CancellationToken cancellationToken) 
-        => await GetFromJsonAsync<ValueAbilityModel>("/ccapi/ver100/functions/autopoweroff", cancellationToken);
-
-    public async Task SetAutoPowerOffAsync(string? value, CancellationToken cancellationToken) 
-        => await PutAsJsonAsync("/ccapi/ver100/functions/autopoweroff", new ValueAbilityModel() { Value = value }, cancellationToken);
-
-    public async Task FormatAsync(string card, CancellationToken cancellationToken)
-       => await PostAsJsonAsync("/ccapi/ver100/functions/cardformat", new StorageNameModel() { Name = card }, cancellationToken);
-
-    //public ValueGet? GetMute()
-    //   => GetFromJson<ValueGet>("/ccapi/ver100/functions/beep");
-
-    //public ValuePut? SetMute(string value)
-    //   => PutAsJson<ValuePut>("/ccapi/ver100/functions/beep", new ValuePut { Value = value });
-
+        
     #endregion
 
     #region Image Operations

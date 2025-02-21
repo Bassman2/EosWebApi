@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)EosDeviceInformationUnitTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EosDeviceStatusUnitTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)EosFunctionsRegisteredNameUnitTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EosFunctionsUnitTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Usings.cs" />
   </ItemGroup>
 </Project>

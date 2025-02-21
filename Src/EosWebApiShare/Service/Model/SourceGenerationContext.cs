@@ -1,6 +1,7 @@
 ﻿namespace EosWebApi.Service.Model;
 
 [JsonSerializable(typeof(CcapisModel))]
+[JsonSerializable(typeof(ErrorMessageModel))]
 [JsonSerializable(typeof(DeviceInformationModel))]
 [JsonSerializable(typeof(DeviceStatusStorageModel))]
 [JsonSerializable(typeof(CurrentStorageModel))]
@@ -12,6 +13,8 @@
 [JsonSerializable(typeof(AuthorModel))]
 [JsonSerializable(typeof(OwnerNameModel))]
 [JsonSerializable(typeof(NicknameModel))]
+[JsonSerializable(typeof(DateTimeDstModel))]
+[JsonSerializable(typeof(ValueAbilityModel))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }

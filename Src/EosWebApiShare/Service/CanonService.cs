@@ -1,6 +1,4 @@
-﻿using EosWebApi.Service.Model;
-
-namespace EosWebApi.Service;
+﻿namespace EosWebApi.Service;
 
 internal class CanonService : JsonService
 {
@@ -45,6 +43,12 @@ internal class CanonService : JsonService
     }
 
     private Dictionary<string, string> verDict = [];
+
+    protected override async Task ErrorHandlingAsync(HttpResponseMessage response, string memberName, CancellationToken cancellationToken)
+    {
+        var errorMessage = await ReadFromJsonAsync<ErrorMessageModel>(response, cancellationToken); 
+        throw new WebServiceException(errorMessage?.Message, response.RequestMessage?.RequestUri, response.StatusCode, response.ReasonPhrase, memberName);
+    }
 
     private string CreateRequest(string path)
     {
@@ -177,30 +181,38 @@ internal class CanonService : JsonService
         await DeleteAsync(CreateRequest("functions/registeredname/nickname"), cancellationToken);
     }
 
+    public async Task<DateTimeDstModel?> GetDateTimeAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<DateTimeDstModel>(CreateRequest("functions/datetime"), cancellationToken);
+        return res;
+    }
+
+    public async Task SetDateTimeAsync(DateTimeDstModel value, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CreateRequest("functions/datetime"), value, cancellationToken);
+    }
+
+    public async Task FormatAsync(string cardName, CancellationToken cancellationToken)
+    {
+        await PostAsJsonAsync(CreateRequest("functions/cardformat"), new StorageNameModel() { Name = cardName }, cancellationToken);
+    }
+
+    public async Task<ValueAbilityModel?> GetBeepAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<ValueAbilityModel>(CreateRequest("functions/beep"), cancellationToken);
+        return res;
+    }
+
+    public async Task SetBeepAsync(ValueAbilityModel value, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CreateRequest("functions/beep"), value, cancellationToken);
+    }
 
 
     /*
-
-
     
-    
-
     #region Camera Settings
-
-   
-
-    public async Task<string?> GetNicknameAsync(CancellationToken cancellationToken)
-       => (await GetFromJsonAsync<CameraNicknameModel>("/ccapi/ver100/functions/registeredname/nickname", cancellationToken))?.Nickname;
-
-    public async Task SetNicknameAsync(string? value, CancellationToken cancellationToken)
-        => await PutAsJsonAsync("/ccapi/ver100/functions/registeredname/nickname", new CameraNicknameModel() { Nickname = value }, cancellationToken);
-
-    public async Task<DateTime?> GetDateTimeAsync(CancellationToken cancellationToken)
-       => (await GetFromJsonAsync<CameraDateTimeModel>("/ccapi/ver100/functions/datetime", cancellationToken))?.DateTime;
-
-    public async Task SetDateTimeAsync(DateTime? value, CancellationToken cancellationToken)
-       => await PutAsJsonAsync("/ccapi/ver100/functions/datetime", (CameraDateTimeModel?)value, cancellationToken);
-
+       
 
     public async Task<ValueAbilityModel?> GetBeepAsync(CancellationToken cancellationToken)
         => await GetFromJsonAsync<ValueAbilityModel>("/ccapi/ver100/functions/beep", cancellationToken);

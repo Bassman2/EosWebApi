@@ -230,6 +230,43 @@ public sealed class Camera : IDisposable
         await service.DeleteNicknameAsync(cancellationToken);
     }
 
+    public async Task<DateTimeDst?> GetDateTimeAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetDateTimeAsync(cancellationToken);
+        return res.CastModel<DateTimeDst>();
+    }
+
+    public async Task SetDateTimeAsync(DateTimeDst dateTimeDst, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetDateTimeAsync(dateTimeDst, cancellationToken);
+    }
+
+    public async Task FormatAsync(string cardName, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.FormatAsync(cardName, cancellationToken);
+    }
+
+    public async Task<ValueAbility?> GetBeepAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetBeepAsync(cancellationToken);
+        return res.CastModel<ValueAbility>();
+    }
+
+    public async Task SetBeepAsync(string value, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SetBeepAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
+    }
+
     /*
 
     #region information

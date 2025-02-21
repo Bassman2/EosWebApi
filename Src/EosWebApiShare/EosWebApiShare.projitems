@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Battery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Canon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Contents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CurrentDirectory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CurrentStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DateTimeDst.cs" />
@@ -22,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryQuality.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\NetworkConnectionAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\PowerZoomTemperature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\TemperatureStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)File.cs" />
@@ -31,11 +33,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\VersionModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PowerZoomStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ContentsModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BatteryListModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NetworkConnectionModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NetworkSettingModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusCurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusStorageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\PowerZoomStatusModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\SensorCleaningModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\TemperatureModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Storage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Temperature.cs" />
@@ -51,7 +57,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NicknameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\OwnerNameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CcapiModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\AutoPowerOffModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\BeepModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CcDisplayOffModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceInformationModel.cs" />

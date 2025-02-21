@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.VisualBasic;
+
 namespace EosWebApi;
 
 public sealed class Camera : IDisposable
@@ -295,6 +297,35 @@ public sealed class Camera : IDisposable
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
         await service.SetAutoPowerOffAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
+    }
+
+    public async Task SensorCleaningAsync(bool autoPowerOff, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.SensorCleaningAsync(new SensorCleaningModel() { AutoPowerOff = autoPowerOff }, cancellationToken);
+    }
+
+    public async Task DisconnectAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.NetworkConnectionAsync(new NetworkConnectionModel() { Action = NetworkConnectionAction.Disconnect }, cancellationToken);
+    }
+
+    public async Task RebootAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.NetworkConnectionAsync(new NetworkConnectionModel() { Action = NetworkConnectionAction.Reboot }, cancellationToken);
+    }
+
+    public async Task<Contents?> GetContentsAsync(CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetContentsAsync(cancellationToken);
+        return res.CastModel<Contents>();
     }
 
     /*

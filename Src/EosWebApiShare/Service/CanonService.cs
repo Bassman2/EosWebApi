@@ -1,4 +1,6 @@
-﻿namespace EosWebApi.Service;
+﻿using EosWebApi.Service.Model;
+
+namespace EosWebApi.Service;
 
 internal class CanonService : JsonService
 {
@@ -230,6 +232,29 @@ internal class CanonService : JsonService
         await PutAsJsonAsync(CreateRequest("functions/autopoweroff"), value, cancellationToken);
     }
 
+    public async Task SensorCleaningAsync(SensorCleaningModel sensorCleaningModel, CancellationToken cancellationToken)
+    {
+        await PostAsJsonAsync(CreateRequest("functions/sensorcleaning"), sensorCleaningModel, cancellationToken);
+    }
+
+    public async Task NetworkConnectionAsync(NetworkConnectionModel networkConnectionModel, CancellationToken cancellationToken)
+    {
+        await PostAsJsonAsync(CreateRequest("functions/networkconnection"), networkConnectionModel, cancellationToken);
+    }
+
+    public async Task<NetworkSettingModel?> GetNetworkSettingAsync(SensorCleaningModel sensorCleaningModel, CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<NetworkSettingModel>(CreateRequest("functions/networksetting"), cancellationToken);
+        return res;
+    }
+
+
+
+    public async Task<ContentsModel?> GetContentsAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("functions/contents"), cancellationToken);
+        return res;
+    }
 
     /*
         

@@ -15,6 +15,9 @@
 [JsonSerializable(typeof(NicknameModel))]
 [JsonSerializable(typeof(DateTimeDstModel))]
 [JsonSerializable(typeof(ValueAbilityModel))]
+[JsonSerializable(typeof(SensorCleaningModel))]
+[JsonSerializable(typeof(NetworkConnectionModel))]
+[JsonSerializable(typeof(ContentsModel))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }

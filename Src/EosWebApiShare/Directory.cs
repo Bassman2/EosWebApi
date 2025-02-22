@@ -62,13 +62,13 @@ public class Directory
     //    => null; // files ??= service.GetFilesAsync(volume!, folder!, default).ToList().Select(d => new CcFile(this.service, d)).ToList();
 
 
-    public void Delete()
-    {
-        throw new NotImplementedException();
-    }
+    //public void Delete()
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-    public void Refresh()
-    {
-        //files = null; // reset
-    }
+    //public void Refresh()
+    //{
+    //    //files = null; // reset
+    //}
 }

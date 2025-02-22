@@ -336,6 +336,16 @@ public sealed class Camera : IDisposable
         return res.CastModel<Contents>();
     }
 
+    public IAsyncEnumerable<string> GetFilesAsync(string volumeName, string folder, FileType fileType = FileType.All, Order order = Order.Asc, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = service.GetFilesAsync(volumeName, folder, fileType, order, cancellationToken);
+        return res;
+    }
+
+    
+
     /*
 
     #region information

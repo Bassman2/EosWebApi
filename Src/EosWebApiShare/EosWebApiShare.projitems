@@ -23,7 +23,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryQuality.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\FileType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\NetworkConnectionAction.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\Order.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\PowerZoomTemperature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\TemperatureStatus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)File.cs" />

@@ -1,4 +1,5 @@
 ﻿using EosWebApi.Service.Model;
+using System.Collections.Generic;
 
 namespace EosWebApi.Service;
 
@@ -258,14 +259,31 @@ internal class CanonService : JsonService
 
     public async Task<ContentsModel?> GetContentsAsync(CancellationToken cancellationToken)
     {
-        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("functions/contents"), cancellationToken);
+        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("contents"), cancellationToken);
         return res;
     }
 
     public async Task<ContentsModel?> GetDirectoriesAsync(string volumeName, CancellationToken cancellationToken)
     {
-        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("functions/contents", volumeName), cancellationToken);
+        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("contents", volumeName), cancellationToken);
         return res;
+    }
+
+    public async IAsyncEnumerable<string> GetFilesAsync(string storage, string directory, FileType type, Order order, [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        string baseReq = CombineUrl(CreateRequest("contents"), storage, directory, ("type", type), ("kind", "chunked"), ("order", order));
+
+        int page = 1;
+        do
+        {
+            string req = CombineUrl(baseReq, ("page", page));
+
+            var res = await GetFromJsonAsync<ContentsModel>(req, cancellationToken);
+            foreach (var item in res!.Path!)
+            {
+                yield return item;
+            }
+        } while (true);
     }
 
     #endregion

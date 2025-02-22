@@ -1,9 +1,9 @@
 ﻿namespace EosWebApi.Service.Model;
 
-internal class ImageInfoModel
+internal class FileModel
 {
     [JsonPropertyName("filesize")]
-    public ulong filesize { get; set; }
+    public ulong FileSize { get; set; }
 
     [JsonPropertyName("protect")]
     public string? Protect { get; set; }

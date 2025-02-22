@@ -13,6 +13,9 @@ internal class CcapisModel
 
     [JsonPropertyName("ver130")]
     public List<CcapiModel>? Ver130 { get; set; }
+
+    [JsonPropertyName("ver140")]
+    public List<CcapiModel>? Ver140 { get; set; }
 }
 
 internal class CcapiModel

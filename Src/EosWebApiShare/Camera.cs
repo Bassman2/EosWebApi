@@ -328,24 +328,50 @@ public sealed class Camera : IDisposable
         return res.CastModel<Contents>();
     }
 
-    public async Task<Contents?> GetDirectoriesAsync(string volumeName, CancellationToken cancellationToken = default)
+    public async Task<Contents?> GetDirectoriesAsync(string storage, CancellationToken cancellationToken = default)
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
-        var res = await service.GetDirectoriesAsync(volumeName, cancellationToken);
+        var res = await service.GetDirectoriesAsync(storage, cancellationToken);
         return res.CastModel<Contents>();
     }
 
-    public IAsyncEnumerable<string> GetFilesAsync(string volumeName, string folder, FileType fileType = FileType.All, Order order = Order.Asc, CancellationToken cancellationToken = default)
+    public IAsyncEnumerable<string> GetFilesAsync(string storage, string directory, FileType fileType = FileType.All, Order order = Order.Asc, CancellationToken cancellationToken = default)
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
-        var res = service.GetFilesAsync(volumeName, folder, fileType, order, cancellationToken);
+        var res = service.GetFilesAsync(storage, directory, fileType, order, cancellationToken);
         return res;
     }
 
-    
+    public async Task DeleteDirectoryAsync(string storage, string directory, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
 
+        await service.DeleteDirectoryAsync(storage, directory, cancellationToken);
+    }
+
+    public async Task<File?> GetFileAsync(string storage, string directory, string file, Kind kind = Kind.Main, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetFileAsync(storage, directory, file, kind, cancellationToken);
+        return res.CastModel<File>(this, file);
+    }
+
+    public async Task ModifyFileAsync(string storage, string directory, string file, Action action, string value, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.ModifyFileAsync(storage, directory, file, action, value, cancellationToken);
+    }
+
+    public async Task DeleteFileAsync(string storage, string directory, string file, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        await service.DeleteFileAsync(storage, directory, file, cancellationToken);
+    }
     /*
 
     #region information

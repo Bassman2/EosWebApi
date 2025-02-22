@@ -18,6 +18,7 @@
 [JsonSerializable(typeof(SensorCleaningModel))]
 [JsonSerializable(typeof(NetworkConnectionModel))]
 [JsonSerializable(typeof(ContentsModel))]
+[JsonSerializable(typeof(FileModel))]
 internal partial class SourceGenerationContext : JsonSerializerContext
 {
 }

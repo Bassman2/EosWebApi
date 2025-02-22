@@ -4,19 +4,22 @@ public class File
 {
     private readonly CanonService service;
 
-    private readonly string? volume;
-    private readonly string? folder;
+    //private readonly string? volume;
+    //private readonly string? folder;
 
-    internal File(CanonService service, string path)
+    internal File(CanonService service, FileModel model, string file)
     {
         this.service = service;
-        string[] arr = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
-        if (arr.Length != 6) throw new Exception("Wrong path length");
+        Name = file;
+        FullName = file;
+        Size = model.FileSize;
+        //string[] arr = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        //if (arr.Length != 6) throw new Exception("Wrong path length");
 
-        this.volume = arr[3];
-        this.folder = arr[4];
-        this.Name = arr[5];
-        this.FullName = $"{arr[3]}/{arr[4]}/{arr[5]}";
+        //this.volume = arr[3];
+        //this.folder = arr[4];
+        //this.Name = arr[5];
+        //this.FullName = $"{arr[3]}/{arr[4]}/{arr[5]}";
     }
 
     public string Name { get; }

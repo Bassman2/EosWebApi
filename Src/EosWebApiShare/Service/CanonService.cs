@@ -11,6 +11,14 @@ internal class CanonService : JsonService
         : base(host, authenticator, appName, SourceGenerationContext.Default)
     {
         CcapisModel ccapi = GetApiListAsync(CancellationToken.None).Result ?? throw new Exception("No connected Canon device");
+        if (ccapi.Ver140 is not null)
+        {
+            foreach (var ver in ccapi.Ver140)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
         if (ccapi.Ver130 is not null)
         {
             foreach (var ver in ccapi.Ver130)
@@ -263,9 +271,9 @@ internal class CanonService : JsonService
         return res;
     }
 
-    public async Task<ContentsModel?> GetDirectoriesAsync(string volumeName, CancellationToken cancellationToken)
+    public async Task<ContentsModel?> GetDirectoriesAsync(string storage, CancellationToken cancellationToken)
     {
-        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("contents", volumeName), cancellationToken);
+        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("contents", storage), cancellationToken);
         return res;
     }
 
@@ -286,6 +294,27 @@ internal class CanonService : JsonService
         } while (true);
     }
 
+    public async Task DeleteDirectoryAsync(string storage, string directory, CancellationToken cancellationToken)
+    {
+        await DeleteAsync(CreateRequest("contents", $"/{storage}/{directory}"), cancellationToken);
+    }
+
+    public async Task<FileModel?> GetFileAsync(string storage, string directory, string file, Kind kind, CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<FileModel>(CombineUrl(CreateRequest("contents"), storage, directory, file, ("kind", kind)), cancellationToken);
+        return res;
+    }
+
+    public async Task ModifyFileAsync(string storage, string directory, string file, Action action, string value, CancellationToken cancellationToken)
+    {
+        await PutAsJsonAsync(CombineUrl(CreateRequest("contents"), storage, directory, file), new ActionModel() { Action = action, Value = value }, cancellationToken);
+    }
+
+    public async Task DeleteFileAsync(string storage, string directory, string file, CancellationToken cancellationToken)
+    {
+        await DeleteAsync(CombineUrl(CreateRequest("contents"), storage, directory, file), cancellationToken);
+    }
+
     #endregion
 
     /*
@@ -294,29 +323,7 @@ internal class CanonService : JsonService
 
     #region Image Operations
 
-    public async Task<IEnumerable<string>?> GetVolumnsAsync(CancellationToken cancellationToken)
-        => (await GetFromJsonAsync<PathListModel>("/ccapi/ver120/contents", cancellationToken))?.Paths;
-
-    public async Task<IEnumerable<string>?> GetDirectoriesAsync(string volumeName, CancellationToken cancellationToken)
-        => (await GetFromJsonAsync<PathListModel>($"/ccapi/ver120/contents/{volumeName}", cancellationToken))?.Paths;
-
-    public async Task<bool> HasFiles(string volumeName, string directoryName, CancellationToken cancellationToken)
-    {
-        return (await GetFromJsonAsync<Number>($"/ccapi/ver120/contents/{volumeName}/{directoryName}?type=all&kind=number", cancellationToken))?.ContentsNumber > 0;
-    }
     
-    public async IAsyncEnumerable<string> GetFilesAsync(string volumeName, string directoryName, [EnumeratorCancellation] CancellationToken cancellationToken)
-    {
-        Number? number = await GetFromJsonAsync<Number>($"/ccapi/ver120/contents/{volumeName}/{directoryName}?type=all&kind=number", cancellationToken);
-        for (uint page = 1; page <= number!.PageNumber; page++)
-        {
-            var list = (await GetFromJsonAsync<PathListModel>($"/ccapi/ver120/contents/{volumeName}/{directoryName}?type=all&kind=list&page={page}", cancellationToken))?.Paths;
-            foreach (var path in list!)
-            {
-                yield return path;
-            }
-        }
-    }
 
     public async Task DeleteDirectory(string volumeName, string directoryName, CancellationToken cancellationToken)
         => await DeleteAsync($"/ccapi/ver130/contents/{volumeName}/{directoryName}", cancellationToken);
@@ -333,8 +340,8 @@ internal class CanonService : JsonService
     public async Task<Stream?> DownloadEmbeddedAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
         => await GetFromStreamAsync($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=embedded", cancellationToken);
 
-    public async Task<ImageInfoModel?> GetFileInfoAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
-        => await GetFromJsonAsync<ImageInfoModel>($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=info", cancellationToken);
+    public async Task<ImageModel?> GetFileInfoAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
+        => await GetFromJsonAsync<ImageModel>($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=info", cancellationToken);
 
     #endregion
 

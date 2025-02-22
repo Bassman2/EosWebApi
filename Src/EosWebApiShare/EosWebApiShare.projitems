@@ -19,11 +19,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)DeviceInformation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeviceStatusStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Directory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\Action.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryKind.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryPosition.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\BatteryQuality.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\FileType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\Kind.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\NetworkConnectionAction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\Order.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\PowerZoomTemperature.cs" />
@@ -35,13 +37,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\VersionModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PowerZoomStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ActionModel.cs" />
     <Compile Include="..\EosWebApiShare\Service\Model\ContentsModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BatteryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NetworkConnectionModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NetworkSettingModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\DeviceStatusCurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceStatusStorageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\PowerZoomStatusModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\SensorCleaningModel.cs" />
@@ -59,24 +61,17 @@
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\DevDescModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NicknameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\OwnerNameModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CcapiModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\BeepModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\CcDisplayOffModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CcapiModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\DeviceInformationModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BatteryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentStorageModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ErrorMessageModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ImageInfoModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\FileModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\LensModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\NumberModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\PathListModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NumberModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\SourceGenerationContext.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\StorageModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\StorageNameModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\TempStatusModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\UrlListModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\StorageNameModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ValueAbilityModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ValueGetModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Obsolet\ValuePutModel.cs" />
   </ItemGroup>
 </Project>

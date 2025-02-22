@@ -33,7 +33,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\ServiceModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Network\Model\VersionModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PowerZoomStatus.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\ContentsModel.cs" />
+    <Compile Include="..\EosWebApiShare\Service\Model\ContentsModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Model\Converter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\CurrentDirectoryModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\BatteryListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Service\Model\NetworkConnectionModel.cs" />

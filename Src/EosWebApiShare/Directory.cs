@@ -47,7 +47,7 @@ public class Directory
 
     public static bool IsFolder => true; 
 
-    private List<File>? files;
+    //private List<File>? files;
 
     //public override IEnumerable<EosFileSystemItem>? FileSystemItems
     //    => Files;
@@ -69,6 +69,6 @@ public class Directory
 
     public void Refresh()
     {
-        files = null; // reset
+        //files = null; // reset
     }
 }

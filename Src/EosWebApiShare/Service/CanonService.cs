@@ -44,7 +44,7 @@ internal class CanonService : JsonService
         }
     }
 
-    private Dictionary<string, string> verDict = [];
+    private readonly Dictionary<string, string> verDict = [];
 
     protected override async Task ErrorHandlingAsync(HttpResponseMessage response, string memberName, CancellationToken cancellationToken)
     {
@@ -56,7 +56,13 @@ internal class CanonService : JsonService
     {
         string version = verDict[path];
         return $"/ccapi/{version}/{path}";
-    }       
+    }
+
+    private string CreateRequest(string path, string arg)
+    {
+        string version = verDict[path];
+        return $"/ccapi/{version}/{path}/{arg}";
+    }
 
     private async Task<CcapisModel?> GetApiListAsync(CancellationToken cancellationToken)
     {
@@ -242,19 +248,27 @@ internal class CanonService : JsonService
         await PostAsJsonAsync(CreateRequest("functions/networkconnection"), networkConnectionModel, cancellationToken);
     }
 
-    public async Task<NetworkSettingModel?> GetNetworkSettingAsync(SensorCleaningModel sensorCleaningModel, CancellationToken cancellationToken)
-    {
-        var res = await GetFromJsonAsync<NetworkSettingModel>(CreateRequest("functions/networksetting"), cancellationToken);
-        return res;
-    }
+    //public async Task<NetworkSettingModel?> GetNetworkSettingAsync(SensorCleaningModel sensorCleaningModel, CancellationToken cancellationToken)
+    //{
+    //    var res = await GetFromJsonAsync<NetworkSettingModel>(CreateRequest("functions/networksetting"), cancellationToken);
+    //    return res;
+    //}
 
-
+    #region Contents Operations
 
     public async Task<ContentsModel?> GetContentsAsync(CancellationToken cancellationToken)
     {
         var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("functions/contents"), cancellationToken);
         return res;
     }
+
+    public async Task<ContentsModel?> GetDirectoriesAsync(string volumeName, CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("functions/contents", volumeName), cancellationToken);
+        return res;
+    }
+
+    #endregion
 
     /*
         

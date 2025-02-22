@@ -328,6 +328,14 @@ public sealed class Camera : IDisposable
         return res.CastModel<Contents>();
     }
 
+    public async Task<Contents?> GetDirectoriesAsync(string volumeName, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        var res = await service.GetDirectoriesAsync(volumeName, cancellationToken);
+        return res.CastModel<Contents>();
+    }
+
     /*
 
     #region information

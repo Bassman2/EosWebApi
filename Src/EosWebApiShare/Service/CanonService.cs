@@ -1,7 +1,4 @@
-﻿using EosWebApi.Service.Model;
-using System.Collections.Generic;
-
-namespace EosWebApi.Service;
+﻿namespace EosWebApi.Service;
 
 internal class CanonService : JsonService
 {
@@ -299,9 +296,9 @@ internal class CanonService : JsonService
         await DeleteAsync(CreateRequest("contents", $"/{storage}/{directory}"), cancellationToken);
     }
 
-    public async Task<FileModel?> GetFileAsync(string storage, string directory, string file, Kind kind, CancellationToken cancellationToken)
+    public async Task<FileModel?> GetFileAsync(string storage, string directory, string file, CancellationToken cancellationToken)
     {
-        var res = await GetFromJsonAsync<FileModel>(CombineUrl(CreateRequest("contents"), storage, directory, file, ("kind", kind)), cancellationToken);
+        var res = await GetFromJsonAsync<FileModel>(CombineUrl(CreateRequest("contents"), storage, directory, file, ("kind", "info")), cancellationToken);
         return res;
     }
 
@@ -315,39 +312,10 @@ internal class CanonService : JsonService
         await DeleteAsync(CombineUrl(CreateRequest("contents"), storage, directory, file), cancellationToken);
     }
 
-    #endregion
-
-    /*
-        
-    #endregion
-
-    #region Image Operations
-
-    
-
-    public async Task DeleteDirectory(string volumeName, string directoryName, CancellationToken cancellationToken)
-        => await DeleteAsync($"/ccapi/ver130/contents/{volumeName}/{directoryName}", cancellationToken);
-
-    public async Task<Stream?> DownloadImageAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
-       => await GetFromStreamAsync($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=main", cancellationToken);
-
-    public async Task<Stream?> DownloadThumbnailAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
-        => await GetFromStreamAsync($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=thumbnail", cancellationToken);
-
-    public async Task<Stream?> DownloadDisplayAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
-        => await GetFromStreamAsync($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=display", cancellationToken);
-
-    public async Task<Stream?> DownloadEmbeddedAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
-        => await GetFromStreamAsync($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=embedded", cancellationToken);
-
-    public async Task<ImageModel?> GetFileInfoAsync(string volumeName, string directoryName, string fileName, CancellationToken cancellationToken)
-        => await GetFromJsonAsync<ImageModel>($"/ccapi/ver130/contents/{volumeName}/{directoryName}/{fileName}?kind=info", cancellationToken);
+    public async Task<Stream?> DownloadFileAsync(string storage, string directory, string file, Kind kind, CancellationToken cancellationToken)
+    {
+        return await GetFromStreamAsync(CombineUrl(CreateRequest("contents"), storage, directory, file, ("kind", kind)), cancellationToken);
+    }
 
     #endregion
-
-    #region Shooting Control
-
-    #endregion
-
-    */
 }

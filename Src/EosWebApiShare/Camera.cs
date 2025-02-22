@@ -351,11 +351,11 @@ public sealed class Camera : IDisposable
         await service.DeleteDirectoryAsync(storage, directory, cancellationToken);
     }
 
-    public async Task<File?> GetFileAsync(string storage, string directory, string file, Kind kind = Kind.Main, CancellationToken cancellationToken = default)
+    public async Task<File?> GetFileAsync(string storage, string directory, string file, CancellationToken cancellationToken = default)
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
-        var res = await service.GetFileAsync(storage, directory, file, kind, cancellationToken);
+        var res = await service.GetFileAsync(storage, directory, file, cancellationToken);
         return res.CastModel<File>(this, file);
     }
 
@@ -372,6 +372,14 @@ public sealed class Camera : IDisposable
 
         await service.DeleteFileAsync(storage, directory, file, cancellationToken);
     }
+
+    public async Task<Stream?> DownloadFileAsync(string storage, string directory, string file, Kind kind = Kind.Main, CancellationToken cancellationToken = default)
+    {
+        WebServiceException.ThrowIfNullOrNotConnected(service);
+
+        return await service.DownloadFileAsync(storage, directory, file, kind, cancellationToken);
+    }
+
     /*
 
     #region information

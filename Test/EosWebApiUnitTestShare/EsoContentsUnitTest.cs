@@ -13,7 +13,7 @@ public class EsoContentsUnitTest : EosBaseUnitTest
         Assert.IsNotNull(contents);
         Assert.IsNotNull(contents.Path);
         Assert.AreEqual(2, contents.Path.Count, nameof(contents.Path.Count));
-        Assert.AreEqual("Canon.Inc", contents.Path[0], nameof(contents.Path[0]));
-        Assert.AreEqual("Canon.Inc", contents.Path[1], nameof(contents.Path[1]));
+        Assert.AreEqual("Canon.Inc", contents.Path[0], nameof(contents.Path) + "[0]");
+        Assert.AreEqual("Canon.Inc", contents.Path[1], nameof(contents.Path) + "[1]");
     }
 }

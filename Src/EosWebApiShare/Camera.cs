@@ -80,11 +80,11 @@ public sealed class Camera : IDisposable
         return res.CastModel<DeviceInformation>();
     }
 
-    public async Task<List<Storage>?> GetStoragesAsync(CancellationToken cancellationToken = default)
+    public async Task<List<Storage>?> GetStorageAsync(CancellationToken cancellationToken = default)
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
-        var res = await service.GetStoragesAsync(cancellationToken);
+        var res = await service.GetStorageAsync(cancellationToken);
         return res.CastModel<Storage>();
     }
 
@@ -320,20 +320,20 @@ public sealed class Camera : IDisposable
         await service.NetworkConnectionAsync(new NetworkConnectionModel() { Action = NetworkConnectionAction.Reboot }, cancellationToken);
     }
 
-    public async Task<Contents?> GetContentsAsync(CancellationToken cancellationToken = default)
+    public async Task<List<string>?> GetStoragesAsync(CancellationToken cancellationToken = default)
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
-        var res = await service.GetContentsAsync(cancellationToken);
-        return res.CastModel<Contents>();
+        var res = await service.GetStoragesAsync(cancellationToken);
+        return Converter.ContentsToStrings(res);
     }
 
-    public async Task<Contents?> GetDirectoriesAsync(string storage, CancellationToken cancellationToken = default)
+    public async Task<List<string>?> GetDirectoriesAsync(string storage, CancellationToken cancellationToken = default)
     {
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
         var res = await service.GetDirectoriesAsync(storage, cancellationToken);
-        return res.CastModel<Contents>();
+        return Converter.ContentsToStrings(res);
     }
 
     public IAsyncEnumerable<string> GetFilesAsync(string storage, string directory, FileType fileType = FileType.All, Order order = Order.Asc, CancellationToken cancellationToken = default)
@@ -341,7 +341,7 @@ public sealed class Camera : IDisposable
         WebServiceException.ThrowIfNullOrNotConnected(service);
 
         var res = service.GetFilesAsync(storage, directory, fileType, order, cancellationToken);
-        return res;
+        return res; 
     }
 
     public async Task DeleteDirectoryAsync(string storage, string directory, CancellationToken cancellationToken = default)

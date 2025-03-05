@@ -4,19 +4,19 @@
 public class EosDeviceStatusUnitTest : EosBaseUnitTest
 {
     [TestMethod]
-    public async Task TestMethodGetStoragesAsync()
+    public async Task TestMethodGetStorageAsync()
     {
         using var camera = new Camera(host, appName);
 
-        var storage = await camera.GetStoragesAsync();
+        var storage = await camera.GetStorageAsync();
 
         Assert.IsNotNull(storage);
         Assert.AreEqual(2, storage.Count);
 
         Storage storage0 = storage[0];
-        Assert.IsNotNull(storage0);
+        //Assert.IsNotNull(storage0);
         Assert.AreEqual("card1", storage0.Name, nameof(storage0.Name));
-        Assert.AreEqual(null, storage0.Url, nameof(storage0.Url));
+        Assert.IsNull(storage0.Url, nameof(storage0.Url));
         Assert.AreEqual("/ccapi/ver120/contents/card1", storage0.Path, nameof(storage0.Path));
         Assert.AreEqual("readwrite", storage0.AccessCapability, nameof(storage0.AccessCapability));
         Assert.AreNotEqual(0ul, storage0.MaxSize, nameof(storage0.MaxSize));
@@ -24,9 +24,9 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         Assert.AreNotEqual(0ul, storage0.ContentsNumber, nameof(storage0.ContentsNumber));
 
         Storage storage1 = storage[1];
-        Assert.IsNotNull(storage1);
+        //Assert.IsNotNull(storage1);
         Assert.AreEqual("card2", storage1.Name, nameof(storage1.Name));
-        Assert.AreEqual(null, storage1.Url, nameof(storage1.Url));
+        Assert.IsNull(storage1.Url, nameof(storage1.Url));
         Assert.AreEqual("/ccapi/ver120/contents/card2", storage1.Path, nameof(storage1.Path));
         Assert.AreEqual("readwrite", storage1.AccessCapability, nameof(storage1.AccessCapability));
         Assert.AreNotEqual(0ul, storage1.MaxSize, nameof(storage1.MaxSize));

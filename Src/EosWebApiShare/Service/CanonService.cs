@@ -83,7 +83,7 @@ internal class CanonService : JsonService
         return res;
     }
 
-    public async Task<List<StorageModel>?> GetStoragesAsync(CancellationToken cancellationToken)
+    public async Task<List<StorageModel>?> GetStorageAsync(CancellationToken cancellationToken)
     {
         var res = await GetFromJsonAsync<DeviceStatusStorageModel>(CreateRequest("devicestatus/storage"), cancellationToken);
         return res?.Storages;
@@ -261,8 +261,8 @@ internal class CanonService : JsonService
     //}
 
     #region Contents Operations
-
-    public async Task<ContentsModel?> GetContentsAsync(CancellationToken cancellationToken)
+    
+    public async Task<ContentsModel?> GetStoragesAsync(CancellationToken cancellationToken)
     {
         var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("contents"), cancellationToken);
         return res;

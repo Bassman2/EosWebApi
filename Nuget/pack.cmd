@@ -1,0 +1,1 @@
+nuget pack EosWebApi.nuspec -properties Configuration=Release

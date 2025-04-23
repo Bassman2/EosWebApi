@@ -54,7 +54,11 @@ internal class CanonService : JsonService
 
     protected override async Task ErrorHandlingAsync(HttpResponseMessage response, string memberName, CancellationToken cancellationToken)
     {
-        var errorMessage = await ReadFromJsonAsync<ErrorMessageModel>(response, cancellationToken); 
+        //var errorMessage = await ReadFromJsonAsync<ErrorMessageModel>(response, cancellationToken);
+
+        JsonTypeInfo<ErrorMessageModel> jsonTypeInfoOut = (JsonTypeInfo<ErrorMessageModel>)context.GetTypeInfo(typeof(ErrorMessageModel))!;
+        var errorMessage = await response.Content.ReadFromJsonAsync<ErrorMessageModel>(jsonTypeInfoOut, cancellationToken);
+
         throw new WebServiceException(errorMessage?.Message, response.RequestMessage?.RequestUri, response.StatusCode, response.ReasonPhrase, memberName);
     }
 

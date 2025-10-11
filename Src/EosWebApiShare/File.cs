@@ -2,12 +2,12 @@
 
 public class File 
 {
-    private readonly CanonService service;
+    private readonly Camera service;
 
     //private readonly string? volume;
     //private readonly string? folder;
 
-    internal File(CanonService service, FileModel model, string file)
+    internal File(Camera service, FileModel model, string file)
     {
         this.service = service;
         Name = file;

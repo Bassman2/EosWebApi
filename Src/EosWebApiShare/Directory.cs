@@ -2,11 +2,11 @@
 
 public class Directory 
 {
-    private readonly CanonService service;
+    private readonly Camera service;
 
     private readonly string? volume;
     private readonly string? folder;
-    internal Directory(CanonService service, string path)
+    internal Directory(Camera service, string path)
     {
         this.service = service;
         string[] arr = path.Split('/', StringSplitOptions.RemoveEmptyEntries);

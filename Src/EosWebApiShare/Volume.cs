@@ -2,9 +2,9 @@
 
 public class Volume 
 {
-    private readonly CanonService service;
+    private readonly Camera service;
 
-    internal Volume(CanonService service, StorageModel storage)
+    internal Volume(Camera service, StorageModel storage)
     {
         this.service = service;
         this.Name = storage.Name ?? "";

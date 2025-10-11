@@ -1,42 +1,118 @@
-﻿
-using Microsoft.VisualBasic;
+﻿using EosWebApi.Service.Model;
 
 namespace EosWebApi;
 
-public sealed class Camera : IDisposable
+public sealed class Camera : JsonService
 {
-    private CanonService? service;
+    //private CanonService? service;
     private DevDescModel? devDesc;
-    private DeviceInformationModel? deviceInformation;
+    private DeviceInformation? deviceInformation;
 
-    public Camera()
-    { }
+    ///// <summary>
+    ///// Initializes a new instance of the <see cref="Camera"/> class using a store key and application name.
+    ///// </summary>
+    ///// <param name="storeKey">The key used to store authentication or configuration data.</param>
+    ///// <param name="appName">The name of the application using the Camera API.</param>
+    //public Camera(string storeKey, string appName) : base(storeKey, appName, SourceGenerationContext.Default)
+    //{ }
 
-    public Camera(string host, string appName)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Camera"/> class using a host URI, an optional authenticator, and an application name.
+    /// </summary>
+    /// <param name="host">The base URI of the Camera API host.</param>
+    /// <param name="authenticator">The authenticator used for API authentication, or <c>null</c> for unauthenticated access.</param>
+    /// <param name="appName">The name of the application using the Camera API.</param>
+    public Camera(Uri host, IAuthenticator? authenticator, string appName) : base(host, authenticator, appName, SourceGenerationContext.Default)
     {
         DevDescModel devDesc = CanonNetwork.GetDevDescAsync(host, default).Result ?? throw new Exception("No connected Canon device");
 
         var uri = new Uri(devDesc.Device!.ServiceList![0].AccessURL!);
 
-        this.service = new CanonService(uri, null, appName);
+        //this.service = new CanonService(uri, null, appName);
     }
+    protected override string? AuthenticationTestUrl => null;
 
-    internal Camera(DevDescModel devDesc)
+    public void Init()
     {
-        _ = Open(devDesc) ? 0 : throw new Exception($"Failed to open {devDesc?.Device?.ServiceList?[0].AccessURL}");
-    }
-
-    public void Dispose()
-    {
-        if (service is not null)
+        CcapisModel ccapi = GetApiListAsync(CancellationToken.None).Result ?? throw new Exception("No connected Canon device");
+        if (ccapi.Ver140 is not null)
         {
-            service.Dispose();
-            service = null;
+            foreach (var ver in ccapi.Ver140)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+        if (ccapi.Ver130 is not null)
+        {
+            foreach (var ver in ccapi.Ver130)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+        if (ccapi.Ver120 is not null)
+        {
+            foreach (var ver in ccapi.Ver120)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+        if (ccapi.Ver110 is not null)
+        {
+            foreach (var ver in ccapi.Ver110)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
+        }
+        if (ccapi.Ver100 is not null)
+        {
+            foreach (var ver in ccapi.Ver100)
+            {
+                var entry = ver.Path!.Replace(@"\", "").Split('/', 4).ToList();
+                verDict[entry[3]] = entry[2];
+            }
         }
     }
-    
-    
-    public bool IsOpen => this.service is not null;
+
+    private readonly Dictionary<string, string> verDict = [];
+
+    protected override async Task ErrorHandlingAsync(HttpResponseMessage response, string memberName, CancellationToken cancellationToken)
+    {
+        //var errorMessage = await ReadFromJsonAsync<ErrorMessageModel>(response, cancellationToken);
+
+        JsonTypeInfo<ErrorMessageModel> jsonTypeInfoOut = (JsonTypeInfo<ErrorMessageModel>)context.GetTypeInfo(typeof(ErrorMessageModel))!;
+        var errorMessage = await response.Content.ReadFromJsonAsync<ErrorMessageModel>(jsonTypeInfoOut, cancellationToken);
+
+        throw new WebServiceException(errorMessage?.Message, response.RequestMessage?.RequestUri, response.StatusCode, response.ReasonPhrase, memberName);
+    }
+
+    private string CreateRequest(string path)
+    {
+        string version = verDict[path];
+        return $"/ccapi/{version}/{path}";
+    }
+
+    private string CreateRequest(string path, string arg)
+    {
+        string version = verDict[path];
+        return $"/ccapi/{version}/{path}/{arg}";
+    }
+
+    private async Task<CcapisModel?> GetApiListAsync(CancellationToken cancellationToken)
+    {
+        var res = await GetFromJsonAsync<CcapisModel>("/ccapi", cancellationToken);
+        return res;
+    }
+
+    //internal Camera(DevDescModel devDesc)
+    //{
+    //    _ = Open(devDesc) ? 0 : throw new Exception($"Failed to open {devDesc?.Device?.ServiceList?[0].AccessURL}");
+    //}    
+
+    //public bool IsOpen => this.service is not null;
 
     public bool Open(string host)
     {
@@ -52,332 +128,341 @@ public sealed class Camera : IDisposable
 
         var uri = new Uri(devDesc.Device!.ServiceList![0].AccessURL!);
 
-        this.service = new CanonService(uri, null,  "xxx");
+        //this.service = new CanonService(uri, null,  "xxx");
         //if (this.service.Connect(uri) ==  false)
         //{
         //    return false;
         //}
 
-        this.deviceInformation = this.service.GetDeviceInformationAsync(default).Result;
+        this.deviceInformation = this.GetDeviceInformationAsync(default).Result;
         return true;
     }
 
-    public void Close()
-    {
-        if (this.service is not null)
-        {
-            this.service.Dispose();
-            this.service = null;
-        }
-    }
+    
         
 
     public async Task<DeviceInformation?> GetDeviceInformationAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetDeviceInformationAsync(cancellationToken);
+        var res = await GetFromJsonAsync<DeviceInformationModel>(CreateRequest("deviceinformation"), cancellationToken);
         return res.CastModel<DeviceInformation>();
     }
 
     public async Task<List<Storage>?> GetStorageAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetStorageAsync(cancellationToken);
-        return res.CastModel<Storage>();
+        var res = await GetFromJsonAsync<DeviceStatusStorageModel>(CreateRequest("devicestatus/storage"), cancellationToken);
+        return res?.Storages?.CastModel<Storage>();
     }
 
     public async Task<CurrentStorage?> GetCurrentStorageAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetCurrentStorageAsync(cancellationToken);
+        var res = await GetFromJsonAsync<CurrentStorageModel>(CreateRequest("devicestatus/currentstorage"), cancellationToken);
         return res.CastModel<CurrentStorage>();
     }
 
     public async Task<CurrentDirectory?> GetCurrentDirectoryAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetCurrentDirectoryAsync(cancellationToken);
+        var res = await GetFromJsonAsync<CurrentDirectoryModel>(CreateRequest("devicestatus/currentdirectory"), cancellationToken);
         return res.CastModel<CurrentDirectory>();
     }
 
     public async Task<Battery?> GetBatteryAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetBatteryAsync(cancellationToken);
+        var res = await GetFromJsonAsync<BatteryModel>(CreateRequest("devicestatus/battery"), cancellationToken);
         return res.CastModel<Battery>();
     }
 
     public async Task<List<Battery>?> GetBatteriesAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetBatteriesAsync(cancellationToken);
-        return res.CastModel<Battery>();
+        var res = await GetFromJsonAsync<BatteryListModel>(CreateRequest("devicestatus/batterylist"), cancellationToken);
+        return res?.Batteries.CastModel<Battery>();
     }
 
     public async Task<Lens?> GetLensAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetLensAsync(cancellationToken);
+        var res = await GetFromJsonAsync<LensModel>(CreateRequest("devicestatus/lens"), cancellationToken);
         return res.CastModel<Lens>();
     }
 
     public async Task<Temperature?> GetTemperatureAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetTemperatureAsync(cancellationToken);
+        var res = await GetFromJsonAsync<TemperatureModel>(CreateRequest("devicestatus/temperature"), cancellationToken);
         return res.CastModel<Temperature>();
     }
 
     public async Task<PowerZoomStatus?> GetPowerZoomStatusAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetPowerZoomStatusAsync(cancellationToken);
+        var res = await GetFromJsonAsync<PowerZoomStatusModel>(CreateRequest("devicestatus/powerzoomstatus"), cancellationToken);
         return res.CastModel<PowerZoomStatus>();
     }
 
     public async Task<string?> GetCopyrightAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetCopyrightAsync(cancellationToken);
-        return res;
+        var res = await GetFromJsonAsync<CopyrightModel>(CreateRequest("functions/registeredname/copyright"), cancellationToken);
+        return res?.Copyright;
     }
 
     public async Task SetCopyrightAsync(string copyright, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SetCopyrightAsync(copyright, cancellationToken);
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/copyright"), new CopyrightModel() { Copyright = copyright }, cancellationToken);
     }
 
     public async Task DeleteCopyrightAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.DeleteCopyrightAsync(cancellationToken);
+        await DeleteAsync(CreateRequest("functions/registeredname/copyright"), cancellationToken);
     }
 
     public async Task<string?> GetAuthorAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetAuthorAsync(cancellationToken);
-        return res;
+        var res = await GetFromJsonAsync<AuthorModel>(CreateRequest("functions/registeredname/author"), cancellationToken);
+        return res?.Author;
     }
 
     public async Task SetAuthorAsync(string? author, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SetAuthorAsync(author, cancellationToken);
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/author"), new AuthorModel() { Author = author }, cancellationToken);
     }
 
     public async Task DeleteAuthorAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.DeleteAuthorAsync(cancellationToken);
+        await DeleteAsync(CreateRequest("functions/registeredname/author"), cancellationToken);
     }
 
     public async Task<string?> GetOwnerNameAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetOwnerNameAsync(cancellationToken);
-        return res;
+        var res = await GetFromJsonAsync<OwnerNameModel>(CreateRequest("functions/registeredname/ownername"), cancellationToken);
+        return res?.OwnerName;
     }
 
     public async Task SetOwnerNameAsync(string? ownerName, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SetOwnerNameAsync(ownerName, cancellationToken);
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/ownername"), new OwnerNameModel() { OwnerName = ownerName }, cancellationToken);
     }
 
     public async Task DeleteOwnerNameAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.DeleteOwnerNameAsync(cancellationToken);
+        await DeleteAsync(CreateRequest("functions/registeredname/ownername"), cancellationToken);
     }
 
     public async Task<string?> GetNicknameAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetNicknameAsync(cancellationToken);
-        return res;
+        var res = await GetFromJsonAsync<NicknameModel>(CreateRequest("functions/registeredname/nickname"), cancellationToken);
+        return res?.Nickname;
     }
 
     public async Task SetNicknameAsync(string nickname, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SetNicknameAsync(nickname, cancellationToken);
+        await PutAsJsonAsync(CreateRequest("functions/registeredname/nickname"), new NicknameModel() { Nickname = nickname }, cancellationToken);
     }
 
     public async Task DeleteNicknameAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.DeleteNicknameAsync(cancellationToken);
+        await DeleteAsync(CreateRequest("functions/registeredname/nickname"), cancellationToken);
     }
 
     public async Task<DateTimeDst?> GetDateTimeAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetDateTimeAsync(cancellationToken);
+        var res = await GetFromJsonAsync<DateTimeDstModel>(CreateRequest("functions/datetime"), cancellationToken);
         return res.CastModel<DateTimeDst>();
     }
 
     public async Task SetDateTimeAsync(DateTimeDst dateTimeDst, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SetDateTimeAsync(dateTimeDst, cancellationToken);
+        await PutAsJsonAsync(CreateRequest("functions/datetime"), dateTimeDst, cancellationToken);
     }
 
     public async Task FormatAsync(string cardName, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.FormatAsync(cardName, cancellationToken);
+        await PostAsJsonAsync(CreateRequest("functions/cardformat"), new StorageNameModel() { Name = cardName }, cancellationToken);
     }
 
     public async Task<ValueAbility?> GetBeepAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetBeepAsync(cancellationToken);
+        var res = await GetFromJsonAsync<ValueAbilityModel>(CreateRequest("functions/beep"), cancellationToken);
         return res.CastModel<ValueAbility>();
     }
 
     public async Task SetBeepAsync(string value, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
-
-        await service.SetBeepAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
+        WebServiceException.ThrowIfNotConnected(client);
+        await PutAsJsonAsync(CreateRequest("functions/beep"), new ValueAbilityModel() { Value = value }, cancellationToken);
     }
 
     public async Task<ValueAbility?> GetDisplayOffAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetDisplayOffAsync(cancellationToken);
+        var res = await GetFromJsonAsync<ValueAbilityModel>(CreateRequest("functions/displayoff"), cancellationToken);
         return res.CastModel<ValueAbility>();
     }
 
     public async Task SetDisplayOffAsync(string value, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SetDisplayOffAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
+        await PutAsJsonAsync(CreateRequest("functions/displayoff"), new ValueAbilityModel() { Value = value }, cancellationToken);
     }
 
     public async Task<ValueAbility?> GetAutoPowerOffAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetAutoPowerOffAsync(cancellationToken);
+        var res = await GetFromJsonAsync<ValueAbilityModel>(CreateRequest("functions/autopoweroff"), cancellationToken);
         return res.CastModel<ValueAbility>();
     }
 
     public async Task SetAutoPowerOffAsync(string value, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SetAutoPowerOffAsync(new ValueAbilityModel() { Value = value }, cancellationToken);
+        await PutAsJsonAsync(CreateRequest("functions/autopoweroff"), new ValueAbilityModel() { Value = value }, cancellationToken);
     }
 
     public async Task SensorCleaningAsync(bool autoPowerOff, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.SensorCleaningAsync(new SensorCleaningModel() { AutoPowerOff = autoPowerOff }, cancellationToken);
+        await PostAsJsonAsync(CreateRequest("functions/sensorcleaning"), new SensorCleaningModel() { AutoPowerOff = autoPowerOff }, cancellationToken);
     }
 
     public async Task DisconnectAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.NetworkConnectionAsync(new NetworkConnectionModel() { Action = NetworkConnectionAction.Disconnect }, cancellationToken);
+        await PostAsJsonAsync(CreateRequest("functions/networkconnection"), new NetworkConnectionModel() { Action = NetworkConnectionAction.Disconnect }, cancellationToken);
     }
+
+    //public async Task<NetworkSettingModel?> GetNetworkSettingAsync(SensorCleaningModel sensorCleaningModel, CancellationToken cancellationToken)
+    //{
+    //    var res = await GetFromJsonAsync<NetworkSettingModel>(CreateRequest("functions/networksetting"), cancellationToken);
+    //    return res;
+    //}
 
     public async Task RebootAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.NetworkConnectionAsync(new NetworkConnectionModel() { Action = NetworkConnectionAction.Reboot }, cancellationToken);
+        await PostAsJsonAsync(CreateRequest("functions/networkconnection"), new NetworkConnectionModel() { Action = NetworkConnectionAction.Reboot }, cancellationToken);
     }
 
     public async Task<List<string>?> GetStoragesAsync(CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetStoragesAsync(cancellationToken);
+        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("contents"), cancellationToken);
         return Converter.ContentsToStrings(res);
     }
 
     public async Task<List<string>?> GetDirectoriesAsync(string storage, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetDirectoriesAsync(storage, cancellationToken);
+        var res = await GetFromJsonAsync<ContentsModel>(CreateRequest("contents", storage), cancellationToken);
         return Converter.ContentsToStrings(res);
     }
 
-    public IAsyncEnumerable<string> GetFilesAsync(string storage, string directory, FileType fileType = FileType.All, Order order = Order.Asc, CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<string> GetFilesAsync(string storage, string directory, FileType fileType = FileType.All, Order order = Order.Asc, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = service.GetFilesAsync(storage, directory, fileType, order, cancellationToken);
-        return res; 
+        string baseReq = CombineUrl(CreateRequest("contents"), storage, directory, ("type", fileType), ("kind", "chunked"), ("order", order));
+
+        int page = 1;
+        do
+        {
+            string req = CombineUrl(baseReq, ("page", page));
+
+            var res = await GetFromJsonAsync<ContentsModel>(req, cancellationToken);
+            foreach (var item in res!.Path!)
+            {
+                yield return item;
+            }
+        } while (true);
     }
 
     public async Task DeleteDirectoryAsync(string storage, string directory, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.DeleteDirectoryAsync(storage, directory, cancellationToken);
+        await DeleteAsync(CreateRequest("contents", $"/{storage}/{directory}"), cancellationToken);
     }
 
     public async Task<File?> GetFileAsync(string storage, string directory, string file, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        var res = await service.GetFileAsync(storage, directory, file, cancellationToken);
+        var res = await GetFromJsonAsync<FileModel>(CombineUrl(CreateRequest("contents"), storage, directory, file, ("kind", "info")), cancellationToken);
         return res.CastModel<File>(this, file);
     }
 
     public async Task ModifyFileAsync(string storage, string directory, string file, Action action, string value, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.ModifyFileAsync(storage, directory, file, action, value, cancellationToken);
+        await PutAsJsonAsync(CombineUrl(CreateRequest("contents"), storage, directory, file), new ActionModel() { Action = action, Value = value }, cancellationToken);
     }
 
     public async Task DeleteFileAsync(string storage, string directory, string file, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        await service.DeleteFileAsync(storage, directory, file, cancellationToken);
+        await DeleteAsync(CombineUrl(CreateRequest("contents"), storage, directory, file), cancellationToken);
     }
 
     public async Task<Stream?> DownloadFileAsync(string storage, string directory, string file, Kind kind = Kind.Main, CancellationToken cancellationToken = default)
     {
-        WebServiceException.ThrowIfNullOrNotConnected(service);
+        WebServiceException.ThrowIfNotConnected(client);
 
-        return await service.DownloadFileAsync(storage, directory, file, kind, cancellationToken);
+        return await GetFromStreamAsync(CombineUrl(CreateRequest("contents"), storage, directory, file, ("kind", kind)), cancellationToken);
     }
 
     /*

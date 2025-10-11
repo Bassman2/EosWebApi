@@ -4,10 +4,10 @@ internal class CanonNetwork
 {
     private const int timeout = 500;
 
-    private static List<Camera> GetCameras()
-    {
-        return FindCameras()?.Select(d => new Camera(d)).ToList() ?? [];
-    }
+    //private static List<Camera> GetCameras()
+    //{
+    //    return FindCameras()?.Select(d => new Camera(d)).ToList() ?? [];
+    //}
 
     public static bool PingCamera(Uri url) => PingCamera(url.Host);
 

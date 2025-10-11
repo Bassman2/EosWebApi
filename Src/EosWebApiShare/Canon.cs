@@ -8,22 +8,22 @@ public class Canon
     { 
         foreach (var devDesc in CanonNetwork.FindCameras()!)
         {
-            Cameras.Add(new Camera(devDesc));
+            //Cameras.Add(new Camera(devDesc));
         }
     }
 
     public ObservableCollection<Camera> Cameras { get; } = [];
 
 
-    public static Camera GetCamera(string host)
-    {
-        bool success = CanonNetwork.PingCamera(host);
-        if (!success) throw new Exception("No connected device");
+    //public static Camera GetCamera(string host)
+    //{
+    //    bool success = CanonNetwork.PingCamera(host);
+    //    if (!success) throw new Exception("No connected device");
 
-        DevDescModel devDesc = CanonNetwork.GetDevDescAsync(host, default).Result ?? throw new Exception("No connected Canon device"); 
+    //    DevDescModel devDesc = CanonNetwork.GetDevDescAsync(host, default).Result ?? throw new Exception("No connected Canon device"); 
 
-        return new Camera(devDesc);
-    }
+    //    return new Camera(devDesc);
+    //}
 
 
     #region network scan

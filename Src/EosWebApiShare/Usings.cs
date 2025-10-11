@@ -13,5 +13,4 @@ global using WebServiceClient.XSerializer;
 
 global using EosWebApi.Network;
 global using EosWebApi.Network.Model;
-global using EosWebApi.Service;
-global using EosWebApi.Service.Model;
+global using EosWebApi.Model;

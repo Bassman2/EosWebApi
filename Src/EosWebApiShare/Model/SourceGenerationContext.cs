@@ -1,4 +1,4 @@
-﻿namespace EosWebApi.Service.Model;
+﻿namespace EosWebApi.Model;
 
 [JsonSerializable(typeof(CcapisModel))]
 [JsonSerializable(typeof(ErrorMessageModel))]

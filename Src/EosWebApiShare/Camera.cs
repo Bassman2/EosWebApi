@@ -1,6 +1,4 @@
-﻿using EosWebApi.Service.Model;
-
-namespace EosWebApi;
+﻿namespace EosWebApi;
 
 public sealed class Camera : JsonService
 {

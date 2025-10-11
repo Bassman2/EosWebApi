@@ -1,6 +1,6 @@
-﻿namespace EosWebApi.Service.Model;
+﻿namespace EosWebApi.Model;
 
-internal class NetworkSettingModel
+internal class NetworkConnectionModel
 {
     [JsonPropertyName("action")]
     public NetworkConnectionAction Action { get; set; }

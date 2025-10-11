@@ -1,4 +1,4 @@
-﻿namespace EosWebApi.Service.Model;
+﻿namespace EosWebApi.Model;
 
 internal partial class Converter
 {

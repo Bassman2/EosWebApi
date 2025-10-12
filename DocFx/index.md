@@ -2,14 +2,14 @@
 _layout: landing
 ---
 
-## JenkinsWebApi 
+## EosWebApi 
 
-JenkinsWebApi is a .NET API for the Jenkins web service.	
+EosWebApi is a .NET API for the EOS web service.	
 		
 ### Getting Started
 
 
-To get started, add the JenkinsWebApi package to your project.
+To get started, add the EosWebApi package to your project.
 
 
 

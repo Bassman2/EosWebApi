@@ -28,6 +28,24 @@ public sealed class Camera : JsonService
 
         //this.service = new CanonService(uri, null, appName);
     }
+
+    public Camera(Uri host, string appName) : base(host, null, appName, SourceGenerationContext.Default)
+    {
+        DevDescModel devDesc = CanonNetwork.GetDevDescAsync(host, default).Result ?? throw new Exception("No connected Canon device");
+
+        var uri = new Uri(devDesc.Device!.ServiceList![0].AccessURL!);
+
+        //this.service = new CanonService(uri, null, appName);
+    }
+
+    public Camera(string host, string appName) : base(new Uri(host), null, appName, SourceGenerationContext.Default)
+    {
+        DevDescModel devDesc = CanonNetwork.GetDevDescAsync(host, default).Result ?? throw new Exception("No connected Canon device");
+
+        var uri = new Uri(devDesc.Device!.ServiceList![0].AccessURL!);
+
+        //this.service = new CanonService(uri, null, appName);
+    }
     protected override string? AuthenticationTestUrl => null;
 
     public void Init()

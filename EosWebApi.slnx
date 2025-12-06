@@ -1,11 +1,13 @@
 <Solution>
   <Folder Name="/Src/">
     <Project Path="../WebServiceClient/Src/WebServiceClientShare/WebServiceClientShare.shproj" />
+    <Project Path="Src/EosWebApi100/EosWebApi100.csproj" />
     <Project Path="Src/EosWebApi80/EosWebApi80.csproj" />
     <Project Path="Src/EosWebApi90/EosWebApi90.csproj" />
     <Project Path="Src/EosWebApiShare/EosWebApiShare.shproj" />
   </Folder>
   <Folder Name="/Test/">
+    <Project Path="Test/EosWebApiUnitTest100/EosWebApiUnitTest100.csproj" />
     <Project Path="Test/EosWebApiUnitTest80/EosWebApiUnitTest80.csproj" />
     <Project Path="Test/EosWebApiUnitTest90/EosWebApiUnitTest90.csproj" />
     <Project Path="Test/EosWebApiUnitTestShare/EosWebApiUnitTestShare.shproj" />

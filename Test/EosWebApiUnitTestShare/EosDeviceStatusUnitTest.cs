@@ -11,7 +11,7 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         var storage = await camera.GetStorageAsync();
 
         Assert.IsNotNull(storage);
-        Assert.AreEqual(2, storage.Count);
+        Assert.HasCount(2, storage);
 
         Storage storage0 = storage[0];
         //Assert.IsNotNull(storage0);
@@ -66,11 +66,11 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         var battery = await camera.GetBatteryAsync();
 
         Assert.IsNotNull(battery);
-        Assert.AreEqual(null, battery.Position, nameof(battery.Position));
+        Assert.IsNull(battery.Position, nameof(battery.Position));
         Assert.AreEqual(BatteryKind.Batterygrip, battery.Kind, nameof(battery.Kind));
         Assert.AreEqual("", battery.Name, nameof(battery.Name));
-        Assert.AreEqual(null, battery.Quality, nameof(battery.Quality));
-        Assert.AreEqual(null, battery.LevelState, nameof(battery.LevelState));
+        Assert.IsNull(battery.Quality, nameof(battery.Quality));
+        Assert.IsNull(battery.LevelState, nameof(battery.LevelState));
         Assert.IsNull(battery.LevelValue, nameof(battery.LevelValue));
     }
 
@@ -82,7 +82,7 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         var batteries = await camera.GetBatteriesAsync();
 
         Assert.IsNotNull(batteries);
-        Assert.AreEqual(2, batteries.Count);
+        Assert.HasCount(2, batteries);
 
         var battery0 = batteries[0];
         Assert.IsNotNull(battery0);
@@ -112,7 +112,7 @@ public class EosDeviceStatusUnitTest : EosBaseUnitTest
         var lens = await camera.GetLensAsync();
 
         Assert.IsNotNull(lens);
-        Assert.AreEqual(true, lens.Mount, nameof(lens.Mount));
+        Assert.IsTrue(lens.Mount, nameof(lens.Mount));
         Assert.AreEqual("\u0002", lens.Name, nameof(lens.Name));
     }
 

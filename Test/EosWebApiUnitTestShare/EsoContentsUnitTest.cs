@@ -11,7 +11,7 @@ public class EsoContentsUnitTest : EosBaseUnitTest
         var storages = await camera.GetStoragesAsync();
 
         Assert.IsNotNull(storages);
-        Assert.AreEqual(2, storages.Count, nameof(storages.Count));
+        Assert.HasCount(2, storages, nameof(storages.Count));
         Assert.AreEqual("Canon.Inc", storages[0], nameof(storages) + "[0]");
         Assert.AreEqual("Canon.Inc", storages[1], nameof(storages) + "[1]");
     }
@@ -24,7 +24,7 @@ public class EsoContentsUnitTest : EosBaseUnitTest
         var directories = await camera.GetDirectoriesAsync("card1");
 
         Assert.IsNotNull(directories);
-        Assert.AreEqual(2, directories.Count, nameof(directories.Count));
+        Assert.HasCount(2, directories, nameof(directories.Count));
         Assert.AreEqual("Canon.Inc", directories[0], nameof(directories) + "[0]");
         Assert.AreEqual("Canon.Inc", directories[1], nameof(directories) + "[1]");
     }
